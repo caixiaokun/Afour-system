@@ -1,0 +1,904 @@
+/* ElementUI的loading状态的修改*/
+.el-loading-mask div.el-loading-spinner{
+	transform: translateY(-50%);
+	margin-top: 0;
+}
+/*通用的类*/
+.textAlign_right{
+	text-align: right;
+}
+
+.danger_tips{
+	color: red;
+}
+
+.main>div{
+	background-color: #fff;
+	padding-bottom: 24px;
+}
+
+.main>div.hasRemarks{
+	background-color: #f8f8ff;
+}
+
+.pos-relative{
+	position: relative;
+}
+
+/*表格的样式重置*/
+div.el-form-item__content input.el-input__inner{
+	height: 24px;
+	line-height: 24px;
+}
+
+span.el-input-number__decrease,
+span.el-input-number__increase{
+	height: 22px;
+	line-height: 22px;
+	top: 2px;
+}
+
+tbody .el-input .el-input__inner,
+.cell input{
+	height: 20px;
+	line-height: 20px;
+}
+
+
+tbody td .el-input-number__decrease,
+tbody td .el-input-number__increase{
+	height: 18px;
+	line-height: 18px;
+	top: 3px;
+}
+
+tbody td .el-input-number{
+	line-height: 24px;
+}
+
+thead>tr>th.is-leaf{
+	background-color: #E5E9F2;
+	color: #475669;
+	font-size: 12px;
+	line-height: 24px;
+	height: 24px;
+	padding: 0;
+}
+
+tbody>tr.el-table__row>td{
+	font-size: 12px;
+	color: #1F2D3D;
+	line-height: 24px;
+	height: 24px;
+	padding: 0;
+}
+/** 合并的table的第一个td背景透明问题*/
+.el-table td.is-center{
+	background-color: #fff;
+}
+
+.el-table__header th .caret-wrapper{
+	margin-top: -4px;
+}
+
+thead>tr>th.is-leaf>div,tbody>tr.el-table__row>td>div{
+	padding: 0 8px;
+	width: 100%;
+}
+
+div.el-table .cell{
+	padding: 0 8px;
+	height: 24px;
+	line-height: 24px;
+	box-sizing: border-box;
+}
+
+.table_cell_auto_height div.el-table .cell{
+	height: auto;
+	line-height: normal;
+
+}
+
+.table_cell_auto_height .cell .el-textarea__inner{
+	margin: 2px 0;
+	padding: 5px;
+}
+
+/*内容面板的设置
+div.main>div{
+	padding: 24px;
+}*/
+
+div.main>div>div:not(.el-dialog__wrapper){
+	padding: 0 24px;
+}
+
+div.main>div>div:first-child:not(.banners){
+	padding-top: 24px;
+}
+
+/*筛选面板中的输入框和下拉菜单的控制*/
+.toolbar .el-form--inline .el-form-item__content{
+	vertical-align: middle;
+}
+.toolbar .banner-right{
+	background-color: #2C3A41;
+}
+/*不同的浏览器会有出现高度的差异，这里统一设置，是布局不错乱*/
+.toolbar .el-col-6,
+.toolbar .el-col-8,
+.toolbar .el-col-12{
+	height: 40px;
+}
+
+.banners{
+	background-color: #f8f8ff;
+	padding-left: 0 !important;
+}
+
+.banners+div.el-row{
+	padding-top: 12px;
+}
+
+.toolbar label.el-form-item__label{
+	padding-right: 8px;
+	width: 80px;
+	line-height: 14px;
+	font-size: 12px;
+}
+
+.toolbar1 label.el-form-item__label{
+	padding-right: 8px;
+	width: 100px;
+	line-height: 14px;
+	font-size: 12px;
+}
+
+/*店铺选择的样式控制*/
+.toolbar .banner-right .el-form-item,
+.toolbar .banner-right .el-form-item .el-form-item__content{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	margin: 0 !important;
+	color: #fff;
+	background-color: #1D272B;
+}
+
+.toolbar .banner-right .el-form-item+.el-form-item .el-form-item__content{
+	background-color: #222C32;
+}
+
+.toolbar .banner-right .el-form-item>label,
+.toolbar .banner-right .el-form-item i.el-icon-arrow-up,
+.toolbar .banner-right .el-form-item i.el-icon-search{
+	flex-shrink: 0;
+	padding-right: 0;
+	padding-left: 10px;
+	line-height: 30px;
+	color: #fff;
+	font-size: 12px;
+	width: auto;
+}
+
+/*.toolbar .banner-right .el-form-item:first-child .el-input__suffix{
+	right: 0;
+}*/
+
+.toolbar .banner-right .el-form--inline div.el-input{
+	width: auto;
+}
+
+.toolbar .banner-right .el-form-item:first-child  div.el-input input{
+	padding-right: 30px;
+}
+
+.toolbar .banner-right .el-icon-search{
+	color: #fff;
+	font-size: 16px !important;
+	margin-right: 12px;
+}
+
+.toolbar .banner-right .el-form-item input{
+	border: none;
+	color: #fff;
+}
+
+.toolbar .banner-right .el-checkbox{
+	padding: 6px 2px 0 10px;
+	margin: 0;
+	width: 100%;
+	box-sizing: border-box;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	text-align: left;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+}
+
+.toolbar .banner-right .el-checkbox:hover .el-checkbox__inner{
+	border-color: #fff;
+}
+
+.toolbar .banner-right .el-checkbox.is-checked .el-checkbox__inner:focus{
+	border-color: #409EFF !important;
+}
+
+.toolbar .banner-right .el-checkbox .el-checkbox__inner:focus{
+	border-color: #fff !important;
+}
+
+.toolbar .banner-right .el-checkbox.is-checked:hover .el-checkbox__inner{
+	border-color: #409EFF;
+}
+
+.toolbar .banner-right .el-checkbox__inner,
+.toolbar .banner-right .el-input__inner{
+	background: transparent;
+}
+
+.toolbar .banner-right .select-shop{
+	overflow-y: auto;
+	padding-bottom: 5px;
+	height: 100px;
+}
+
+.toolbar .banner-right textarea{
+	resize: none;
+}
+
+/*设置滚动条的样式，只对谷歌浏览器有效*/
+.toolbar .banner-right .select-shop::-webkit-scrollbar,
+.toolbar .banner-right textarea::-webkit-scrollbar {
+	width: 8px;
+}
+
+.toolbar .banner-right .select-shop::-webkit-scrollbar-track,
+.toolbar .banner-right textarea::-webkit-scrollbar-track{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+}
+
+.toolbar .banner-right .select-shop::-webkit-scrollbar-thumb,
+.toolbar .banner-right textarea::-webkit-scrollbar-thumb {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+	background: rgba(0,0,0,0.1);
+	border-radius: 10px;
+}
+
+.toolbar .banner-right .is-checked .el-checkbox__inner{
+	background-color: #409EFF;
+}
+
+.toolbar .banner-right .el-checkbox__label{
+	color: #8AA4AF;
+	font-size:12px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.toolbar .banner-right .el-checkbox__label:hover{
+	color: #fff;
+}
+
+.toolbar .banner-right .is-checked .el-checkbox__label{
+	color: #fff;
+}
+
+.toolbar span.demonstration{
+	float: left;
+	box-sizing: border-box;
+}
+
+.toolbar .el-form-item:not(.filter-btns){
+	margin-bottom: 12px;
+	text-align: right;
+}
+
+.toolbar .el-form--inline div.el-input{
+	width: 156px;
+}
+
+.toolbar .el-form--inline div.el-date-editor i.el-icon-time,
+.toolbar .el-form--inline div.el-date-editor .el-icon-date{
+	display: none;
+}
+
+.dialogFormClass .col-pagination .el-pagination .el-select .el-input{
+	width: 100px;
+}
+
+.dialogFormClass .col-pagination .el-pagination__editor.el-input{
+	width: 50px;
+}
+
+.toolbar .el-form--inline div.el-input .el-input__inner{
+	// height: 30px;
+	// line-height: 30px;
+	padding: 0 10px;
+	width: 100%;
+}
+
+.toolbar .el-form--inline div.el-input.el-date-editor .el-input__inner{
+	// padding-left: 30px;
+	width: 156px;
+}
+
+.toolbar .el-form--inline .filter-btns{
+	text-align: right;
+	margin-right: 0;
+	margin-bottom: 12px;
+	margin-left: 50px;
+    float: right;
+}
+
+.toolbar .filter-btns .el-button{
+	vertical-align: top;
+	float: left;
+}
+
+.toolbar .time-range div.el-date-editor{
+	margin-bottom: 24px;
+	width: 165px;
+}
+
+.toolbar .filter-btns .el-button + button{
+	margin-left: 8px;
+}
+.toolbar .el-form-item .el-form-item__content .el-select__tags{
+	white-space: nowrap;
+}
+
+/*控制下拉选择框的样式，多选是，+1符号显示异常*/
+.el-select__tags>span{
+	display: flex !important;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	box-sizing: border-box;
+	width: 130px;
+}
+
+.el-select__tags>span>span:nth-child(1){
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: row;
+	overflow: hidden;
+}
+
+.el-select__tags>span>span:nth-child(1)>span{
+	flex-grow: 1;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;	
+}
+
+.el-select__tags>span>span:nth-child(1)>i{
+	flex-shrink: 0;
+	top: 3px;
+}
+
+.el-select .el-select__tags .el-tag__close.el-icon-close{
+	top: 3px;
+}
+
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected:after{
+	transform: translateX(100%);
+}
+
+span:nth-child(2){
+	flex-shrink: 0;
+}
+
+/*表格的操作按钮样式的*/
+.operate-btns{
+	margin-top: 12px;
+}
+
+.operate-btns button.el-button{
+	float: left;
+	margin-right: 8px;
+	margin-left: 0;
+	margin-bottom: 12px;
+}
+.operate-btns .tips{
+	vertical-align: middle;
+}
+
+/*所有的按钮的样式的修改*/
+button.el-button--mini{
+	height: 30px;
+	font-size: 12px;
+	border-radius: 3px;
+	padding: 0 15px;
+}
+
+/*页码的设置*/
+.col-pagination{
+	padding: 0 !important;
+	margin-top: 24px;
+	margin-bottom: 12px;
+	text-align: right;
+}
+
+/*弹出框的样式控制，审单页面中的修改备注*/
+.dialog_remark .el-dialog__wrapper .el-dialog__body{
+	padding: 5px 10px;
+}
+
+.dialog_remark .el-dialog__wrapper .el-dialog__footer{
+	padding: 10px;
+}
+
+.dialog_remark .el-dialog__wrapper .el-dialog__footer>div{
+	text-align: right;
+}
+
+/*banner中左右布局的样式控制*/
+.banner {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.banner .banner-left{
+	flex-grow: 1;
+	background: #fff;
+	padding: 24px 4px 0 4px;
+    margin-bottom: 12px;
+}
+
+.hasRemarks .banner-left{
+	margin-bottom: 0;
+}
+
+.banner .banner-left .el-form::after{
+	content: '';
+	display: block;
+	clear: both; 
+}
+
+.banner .banner-right{
+	width: 164px;
+	overflow-x: hidden;
+	min-width: 164px;
+	height: 100%;
+	margin: 0px -36px 0 12px;
+	flex-shrink: 1;
+	margin-bottom: 12px;
+}
+
+.hasRemarks{
+	width: 100%;
+	position: relative;
+	padding-right: 164px;
+	box-sizing: border-box;
+	background: #f8f8ff;
+}
+
+.hasRemarks .left{
+	width: 100%;
+	background: #FFF;
+	box-sizing: border-box;
+	padding: 0 !important;
+}
+
+.hasRemarks .left .operate-btns{
+	padding-top: 12px;
+}
+
+.hasRemarks .left>div{
+	padding: 0 4px;
+	background-color: #fff;
+}
+
+.hasRemarks .left>div:last-child{
+	padding-bottom: 24px;
+}
+
+.hasRemarks .right{
+	position: absolute;
+	right: -12px;
+	top: 0;
+	width: 164px;
+	padding: 0 !important;
+	overflow: hidden;
+}
+
+.hasRemarks .select-shop{
+	height: 300px !important;
+}
+
+.hasRemarks .right .title{
+	color: #fff;
+	text-align: center;
+	font-size: 12px;
+	height: 30px;
+	line-height: 30px;
+	background-color: #1D272B;
+}
+
+.hasRemarks .right .el-textarea__inner{
+	background-color: #2C3A41;
+	border: none;
+	border-radius: 0;
+	height: 110px;
+	color: #fff;
+}
+
+.hasRemarks .right .btns{
+	padding: 12px 0;
+	text-align: center;
+	background-color: #2C3A41;
+}
+
+.hasRemarks .right .btns button{
+	width: 64px;
+	height: 30px;
+}
+
+.extra-btns{
+	padding-bottom: 12px !important;
+}
+
+.extra-btns button{
+	width: 100px;
+	height: 30px;
+	border: 1px solid #C0C4CC;
+	font-size: 12px;
+	color: #C0C4CC;
+	letter-spacing: 0;
+	line-height: 14px;
+}
+
+.extra-btns button.active{
+	border-color: #007AFF;
+	color: #007AFF;
+	background-color: #E6F1FC;
+	z-index: 15;
+}
+
+.extra-btns button.active:hover{
+	border-color: #007AFF;
+}
+// 弹出框为表单的统一UI
+.dialogFormClass .el-form--inline div.el-form-item__label{
+	width: 140px!important;
+	font-size: 12px;
+	text-align: right;
+}
+.dialogFormClass .el-form-item__label{
+	width: 140px;
+	font-size: 12px;
+	text-align: right;
+}
+
+.dialogFormClass .remark .el-form-item__label{
+	width: auto;
+}
+
+.dialogFormClass .el-dialog__body{
+	padding: 0px 20px;
+}
+.dialogFormClass .el-dialog__header{
+	padding: 10px 20px 0px;
+	min-height: 24px;
+}
+.dialogFormClass .textareaClass .el-form-item__content{
+	width: 425px;
+}
+.dialogFormClass .textareaClass690 .el-form-item__content{
+	width: 690px;
+}
+
+.dialogFormClass .textareaClass.el-form-item--mini,
+.dialogFormClass .textareaClass .el-textarea{
+	margin-bottom: 0px;
+}
+
+.dialogFormClass .el-form-item__content{
+	width: 156px;
+	display: inline-block;
+	position: relative;
+}
+
+.dialogFormClass .set_width_auto .el-form-item__content{
+	width: auto;
+}
+
+.dialogFormClass .el-date-editor{
+	width: 156px!important;
+}
+
+.dialogFormClass .el-date-editor .el-input__inner{
+	padding-right: 10px;
+}
+
+.dialogFormClass .longInput690{
+	width: 690px;
+}
+.dialogFormClass .longInput350{
+	width: 480px;
+}
+.dialogFormClass .productCodeTip{
+	font-size: 10px;
+    color: #4CA1FF;
+    margin-top: -15px;
+	padding-left: 140px;
+	margin-bottom: 18px;
+	box-sizing: border-box;
+}
+
+.dialogFormClass .line{
+	margin-left: -10px;
+    margin-top: 4px;
+}
+
+.unit_info{
+	margin-left:8px;
+}
+
+.unit_info_pos{
+	position: absolute;
+    top: 0;
+    left: 100%;
+}
+
+/*弹出框中的特殊效果的样式*/
+.dialogFormClass .el-form legend{
+	font-size: 14px;
+}
+
+.dialogFormClass .flex-layout>.el-form-item{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	padding-right: 10px;
+  }
+ .dialogFormClass .flex-layout>.el-form-item>label{
+	flex-shrink: 1;
+  }
+.dialogFormClass .flex-layout>.el-form-item>div{
+	flex-grow: 1;
+  }
+
+.dialogFormClass fieldset{
+	min-width: 0;
+}
+
+.dialogFormClass .table_container{
+	padding: 0 12px 18px 12px;
+}
+
+.dialogFormClass fieldset.fieldset_vertical_pading{
+	padding-top: 12px;
+	padding-bottom: 18px;
+	margin-top: 12px;
+}
+
+.dialogFormClass fieldset.fieldset_horizon_padding{
+	padding-left: 24px;
+	padding-right: 24px;
+}
+
+.dialogFormClass .fieldset_style{
+	padding: 12px 24px 12px 24px;
+	margin-top: 12px;
+	border-width: 2px;
+	border-style: groove;
+	border-color: threedface;
+	border-image: initial;
+}
+
+.dialogFormClass fieldset.fieldset_bottom_padding{
+	padding-bottom: 18px;
+}
+
+.dialogFormClass fieldset.fieldset_no_padding_b{
+	padding-bottom: 0;
+}
+
+.dialogFormClass fieldset .btn_contianer{
+	padding: 12px 12px 12px 0;
+}
+
+.dialogFormClass .fieldset_btns{
+	margin-bottom: 18px;
+}
+
+.dialogFormClass .dialog-footer{
+	text-align: center;
+}
+
+.dialogFormClass .margin_bottom{
+	margin-bottom: 12px;
+}
+
+.dialogFormClass .margin_bottom_18{
+	margin-bottom: 18px;
+}
+
+.toolbar .margin_bottom{
+	margin-bottom: 24px;
+}
+
+.dialogFormClass .margin_top{
+	margin-top: 12px;
+}
+
+.dialogFormClass .margin_left{
+	margin-left: 5px;
+}
+
+.dialogFormClass .no_margin_bottom{
+	margin-bottom: 0;
+}
+
+.dialogFormClass .no_margin_left{
+	margin-left: 0;
+}
+
+.dialogFormClass .no_margin_top{
+	margin-top: 0;
+}
+
+.dialogFormClass .lable_auto_width label{
+	width: auto;
+}
+
+/*2B,2C页面中的导入界面的样式*/
+.dialogFormClass .horizon_flex_layout{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+}
+
+.dialogFormClass .horizon_flex_layout>label{
+	flex-shrink: 0;
+	width: auto;
+}
+
+.dialogFormClass .horizon_flex_layout>.el-form-item__content{
+	width: auto;
+	flex-grow: 1;
+	border: 1px solid rgb(220, 223, 230);
+	padding: 5px 10px;
+}
+
+.dialogFormClass .radio_btns_group .el-radio-group .el-row{
+	margin: 12px 0;
+}
+
+.dialogFormClass .radio_btns_group .el-radio-group label{
+	min-width: 110px;
+	margin-right: 10px;
+}
+
+.unit_inside{
+	font-size:12px; 
+	vertical-align: sub;
+	margin-left: -10px;
+}
+
+.text_align_center{
+	text-align: center;
+}
+
+.toolbar .el-form--inline .text_align_center .filter-btns{
+	float: none;
+	margin-left: 0;
+}
+
+.el-icon-question{
+	font-size: 24px;
+	vertical-align: middle;
+}
+ 
+.filters-left-btns button{
+	float: left;
+}
+
+.el-icon-search:hover{
+	cursor: pointer;
+}
+
+.el-icon-search:active{
+	color: #C0C4CC !important;
+}
+
+th.red-star div:after {
+    content: '*';
+    color: red;
+}
+
+.custome.el-icon-check{
+	color: #000;
+	font-weight: bold;
+}
+
+.transparentRadio .el-radio__label {
+    color: transparent;
+  }
+.transparentRadio .el-radio__input.is-disabled+span.el-radio__label{
+	color: transparent !important;
+}
+.transparentRadio.is-checked .el-radio__label {
+    color: transparent !important;
+  }
+
+/*###################*/
+/*饿了么按钮的组件被点击后，鼠标离开仍保持被focus的状态，以下的样式处理这个问题*/
+.el-button--primary.is-plain:focus,
+.el-button--primary:focus{
+	color: #409EFF !important;
+    background: #ecf5ff !important;
+	border-color: #b3d8ff !important;
+}
+
+.el-button--primary.is-plain:active,
+.el-button--primary.is-plain:hover,
+.el-button--primary:active,
+.el-button--primary:hover{
+	background: #409EFF !important;
+    border-color: #409EFF !important;
+	color: #fff !important;
+}
+  /*##################*/
+
+  /*切换弹出询问框的“取消”和“确定”按钮的位置*/
+  .el-message-box .el-message-box__btns>.el-button{
+	  float: right;
+  }
+
+  .el-message-box .el-message-box__btns>.el-button:first-child{
+	  margin-left: 12px;
+  }
+
+
+  /* 配合多选表格的选中高亮样式*/
+  .el-table__body .current-row .el-table-column--selection,
+  .el-table__body .current-row .el-table-column--selection ~ td,
+  .el-table__body .el-table-column--selection ~ td{
+	background-color: #fff;
+  }
+
+  .el-table__body .tr_highlight .el-table-column--selection,
+  .el-table__body .tr_highlight .el-table-column--selection ~ td,
+  .el-table__body .tr_highlight.current-row .el-table-column--selection,
+  .el-table__body .tr_highlight.current-row .el-table-column--selection ~ td{
+	background-color: #eef5fe;
+  }
+
+  /*showovertips的样式调整*/
+  .el-tooltip__popper{
+    max-width: 90% !important;
+    word-break: break-all !important;
+}
+
+/*筛选条件模块中的【条件】栏一行显示*/
+.toolbar .symbol-condition .fuhao{
+	width: 88px;
+}
+.toolbar .symbol-condition .fuhao .el-form-item__content{
+	width: 88px;
+}
+.toolbar .symbol-condition .fuhao .el-form-item__content .el-select{
+	width: 88px!important;
+}
+.toolbar .symbol-condition .fuhao .el-form-item__content .el-select .el-input{
+	width: 88px!important;
+}
+.toolbar .symbol-condition .conditonInput .el-form-item__content .el-input{
+	width: 128px!important;
+}
+.toolbar .symbol-condition .conditonInput .el-form-item__content .el-input .el-input__inner{
+	width: 128px!important;
+}
+.toolbar .symbol-condition .el-form-item{
+	margin-right: 0px;
+}
+
+

@@ -4,9 +4,9 @@
     <sidebar class="sidebar-container" />
     <div class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
-        <navbar />
+        <navbar></navbar>
       </div>
-      <app-main />
+      <app-main></app-main>
     </div>
   </div>
 </template>
