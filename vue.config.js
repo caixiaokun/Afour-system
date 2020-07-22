@@ -38,10 +38,11 @@ module.exports = {
     },
     proxy: {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
-      '/admin': {
-        target: `http://localhost:8886/`,
+      '/api': {
+        target: `http://211.233.81.229:8099/`,
         changeOrigin: true,
         pathRewrite: {
+          '^/api': 'api'
         }
       }
     }

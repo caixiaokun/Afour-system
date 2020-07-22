@@ -12,20 +12,13 @@
         <h3 class="title">后台管理系统</h3>
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item prop="phone">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
-        <el-input
-          id="account"
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
+        <el-input id="account" ref="phone"
+          v-model="loginForm.phone" placeholder="Username"
+          name="phone" type="text" tabindex="1" auto-complete="on" />
       </el-form-item>
 
       <el-form-item prop="password">
@@ -64,6 +57,7 @@
 
 <script>
 import md5 from "js-md5";
+import API from '@/api/api.js'
 export default {
   name: "Login",
   data() {
@@ -83,11 +77,11 @@ export default {
     };
     return {
       loginForm: {
-        username: "admin",
-        password: "111111"
+        phone: "",
+        password: ""
       },
       loginRules: {
-        username: [
+        phone: [
           { required: true, trigger: "blur", validator: validateUsername }
         ],
         password: [
@@ -120,34 +114,19 @@ export default {
     },
     handleLogin() {
       let that = this;
-      this.loading = true;
-      //数据格式验证
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          localStorage.setItem("hasLogin", true);
-          this.$router.push({ path: "/" });
-        } else {
-          console.log("验证失败");
-        }
-      });
-      return 0;
+      // this.loading = true;
       // 可自定义登录时的逻辑处理
-      this.req({
-        url: "login",
-        data: {
-          account: that.loginForm.username,
-          psw: md5(that.loginForm.password + "*/-sz") //对密码进行加盐md5处理
-        },
+      that.req({
+        url:'/api/user/login?phone='+that.loginForm.phone+'&password='+that.loginForm.password,
+        data: {},
         method: "POST"
-      }).then(
-        res => {
-          console.log("res :", res);
+      }).then(res => {
+        console.log(res)
           localStorage.setItem("hasLogin", true);
-          localStorage.setItem("token", res.data.token);
-          localStorage.setItem("userInfo", JSON.stringify(res.data.userInfo));
+          localStorage.setItem("token", res.data.userToken);
+          localStorage.setItem("userInfo", JSON.stringify(res.data));
           this.$router.push({ path: "/" });
-        },
-        err => {
+        }, err => {
           console.log("err :", err);
           this.passwordError = true;
           this.loading = false;

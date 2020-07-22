@@ -4,7 +4,10 @@ import {
 } from 'element-ui'
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: '', // url = base url + request url
+  headers: {
+    'Content-Type': 'application/json'
+  },
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 50000 // request timeout
 })
@@ -14,7 +17,6 @@ service.interceptors.request.use(
   config => {
     // do something before request is sent
     config.headers.token = localStorage.getItem('token')
-
     return config
   },
   error => {
@@ -40,7 +42,7 @@ service.interceptors.response.use(
     const res = response.data
 
     // if the custom code is not 100, it is judged as an error.
-    if (res.code !== 200) {
+    if (res.code !== 0) {
       Message({
         message: res.msg || 'Error check your token or method',
         type: 'error',
