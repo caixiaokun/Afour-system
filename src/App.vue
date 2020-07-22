@@ -3,7 +3,6 @@
     <router-view />
   </div>
 </template>
-
 <script>
 // 初始element-ui版本-
 // "element-ui": "2.7.2",
