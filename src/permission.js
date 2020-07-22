@@ -26,14 +26,6 @@ router.beforeEach(async(to, from, next) => {
       next()
       NProgress.done()
     }
-    if (to.path === '/user/user') {
-      let id = JSON.parse(localStorage.getItem('userInfo')).id
-      console.log(id)
-      if (id > 2) {
-        next({ path: '/task' })
-        window.alert('permission denied')
-      }
-    }
   } else {
     /* has no token*/
 
