@@ -62,7 +62,7 @@ export const constantRoutes = [{
     component: Layout,
     meta: {
       title: '日志管理',
-      icon: 'eye'
+      icon: 'eye-open'
     },
     children:[
       {
@@ -74,11 +74,11 @@ export const constantRoutes = [{
         }
       },
       {
-        path: 'operationLog',
-        name: 'operationLog',
-        component: () => import('@/views/logManage/operationLog'),
+        path: 'logMoeny',
+        name: 'logMoeny',
+        component: () => import('@/views/logManage/logMoeny'),
         meta: {
-          title: '操作日志',
+          title: '资金日志',
         }
       }
     ]
