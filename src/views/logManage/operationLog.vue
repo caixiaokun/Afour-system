@@ -5,25 +5,13 @@
         <el-col :span="24" class="toolbar">
             <el-form :inline="true" :model="SeachForm">
             <el-col :span="6">
-                <el-form-item label="登陆名称:">
-                    <el-input v-model="SeachForm.username" placeholder="登陆名称" ></el-input>
+                <el-form-item label="操作人员:">
+                    <el-input v-model="SeachForm.username" placeholder="操作人员" ></el-input>
                 </el-form-item>
             </el-col>
             <el-col :span="6">
-                <el-form-item label="手机号码:">
-                     <el-input v-model="SeachForm.phone" placeholder="手机号码" ></el-input>
-                </el-form-item>
-            </el-col>
-             <el-col :span="6">
-                <el-form-item label="上级id:">
-                    <el-input v-model="SeachForm.templateName" placeholder="上级id" ></el-input>
-                </el-form-item>
-            </el-col>
-            <el-col :span="6">
-                <el-form-item label="用户状态:">
-                    <el-select v-model="SeachForm.status" clearable >
-                        <el-option v-for="(item, index ) in userStauts" :key="index"  :label="item.dictName" :value="item.dictId"></el-option>
-                    </el-select>
+                <el-form-item label="操作类型:">
+                     <el-input v-model="SeachForm.phone" placeholder="操作类型" ></el-input>
                 </el-form-item>
             </el-col>
             <el-col :span="12">
@@ -43,10 +31,7 @@
     </el-row>
     <!-- 按钮区 -->
     <el-row class='operate-btns mt20'>
-      <el-button size="small" type="success"  icon="el-icon-plus">新增</el-button>
-      <el-button size="small" type="warning" icon="el-icon-edit">修改</el-button>
       <el-button size="small" type="warning" icon="el-icon-download">导出</el-button>
-       <el-button size="small" type="danger" icon="el-icon-delete">删除</el-button>
     </el-row>
     <!-- 表格 -->
     <el-row class="mt20">

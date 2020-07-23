@@ -116,7 +116,7 @@ export default {
       let that = this;
       // this.loading = true;
       // 可自定义登录时的逻辑处理
-      that.req({
+      that.Httpclient({
         url:'/api/user/login?phone='+that.loginForm.phone+'&password='+that.loginForm.password,
         data: {},
         method: "POST"

@@ -37,16 +37,53 @@ export const constantRoutes = [{
         meta: {
           title: '财务管理',
         }
-      },{
+      },
+      {
         path: 'userManage',
         name: 'userManage',
         component: () => import('@/views/sysManage/userManage'),
         meta: {
           title: '用户管理',
         }
+      },
+      {
+        path: 'bankCard',
+        name: 'bankCard',
+        component: () => import('@/views/sysManage/bankCard'),
+        meta: {
+          title: '银行卡管理',
+        }
       }
     ]
   },
+  //日志管理
+  {
+    path: '/logManage',
+    component: Layout,
+    meta: {
+      title: '日志管理',
+      icon: 'eye'
+    },
+    children:[
+      {
+        path: 'operationLog',        
+        name: 'operationLog',
+        component: () => import('@/views/logManage/operationLog'),
+        meta: {
+          title: '操作日志',
+        }
+      },
+      {
+        path: 'operationLog',        
+        name: 'operationLog',
+        component: () => import('@/views/logManage/operationLog'),
+        meta: {
+          title: '操作日志',
+        }
+      }
+    ]
+
+  }
 ]
 
 const createRouter = () => new Router({

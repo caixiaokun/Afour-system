@@ -14,24 +14,6 @@
                      <el-input v-model="SeachForm.phone" placeholder="手机号码" ></el-input>
                 </el-form-item>
             </el-col>
-             <el-col :span="6">
-                <el-form-item label="上级id:">
-                    <el-input v-model="SeachForm.templateName" placeholder="上级id" ></el-input>
-                </el-form-item>
-            </el-col>
-            <el-col :span="6">
-                <el-form-item label="用户状态:">
-                    <el-select v-model="SeachForm.status" clearable >
-                        <el-option v-for="(item, index ) in userStauts" :key="index"  :label="item.dictName" :value="item.dictId"></el-option>
-                    </el-select>
-                </el-form-item>
-            </el-col>
-            <el-col :span="12">
-                <el-form-item label="创建时间:">
-                   <el-date-picker v-model="SeachForm.startcreatedate" type="date" placeholder="选择开始日期"></el-date-picker>
-                   <el-date-picker v-model="SeachForm.endcreatedate" type="date" placeholder="选择结束日期"></el-date-picker>
-                </el-form-item>
-            </el-col>
             <el-col :span="6">
               <el-form-item class="opeattionClass">
                   <el-button size="small" type="info" icon="el-icon-search" @click="search()">查询</el-button>
@@ -44,24 +26,13 @@
     <!-- 按钮区 -->
     <el-row class='operate-btns mt20'>
       <el-button size="small" type="success"  icon="el-icon-plus">新增</el-button>
-      <el-button size="small" type="warning" icon="el-icon-edit">修改</el-button>
-      <el-button size="small" type="warning" icon="el-icon-download">导出</el-button>
-       <el-button size="small" type="danger" icon="el-icon-delete">删除</el-button>
     </el-row>
     <!-- 表格 -->
     <el-row class="mt20">
-        <el-table max-height="480" 
-            ref="multipleTable" row-key="id" 
+        <el-table max-height="480"  row-key="id" 
             :data="dataList" border tooltip-effect="dark" style="width: 100%"
             v-loading="tableLoading" element-loading-text="拼命加载中">
             <el-table-column type="index" fixed label="序号" width="50" header-align="center" align="center"/>
-            <el-table-column label="" width="50" fixed header-align="center" align="center">
-              <template slot-scope="scope">
-                <el-radio-group v-model="selectRowdata">
-                  <el-radio :label="scope.row" class="transparentRadio"> </el-radio>
-                </el-radio-group>
-              </template>
-            </el-table-column>
             <el-table-column prop="templateCode" fixed label="模板编号" show-overflow-tooltip min-width="200"/>
             <el-table-column fixed="right" label="操作">
                 <template slot-scope="scope">
@@ -93,26 +64,22 @@ export default {
       SeachForm:{//表单
           username: "",
           phone:"",
-          status:"",
-          startcreatedate:"",
-          endcreatedate:"",
           pageIndex:1,
           pageSize:10,
       },
-      userStauts:[],
       total:0,
       dataList:[],
       tableLoading:false
     };
   },
   mounted(){
-    this.search()
+    // this.search()
   },
   methods: {
     search(){
         var that = this
         that.Httpclient({
-            url:'/api/user/selectAll',
+            url:'',
             data: that.SeachForm,
             method: "get"
       }).then(res => {
