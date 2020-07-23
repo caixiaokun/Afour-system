@@ -66,7 +66,7 @@ export const constantRoutes = [{
     },
     children:[
       {
-        path: 'operationLog',        
+        path: 'operationLog',
         name: 'operationLog',
         component: () => import('@/views/logManage/operationLog'),
         meta: {
@@ -74,7 +74,7 @@ export const constantRoutes = [{
         }
       },
       {
-        path: 'operationLog',        
+        path: 'operationLog',
         name: 'operationLog',
         component: () => import('@/views/logManage/operationLog'),
         meta: {
@@ -83,7 +83,57 @@ export const constantRoutes = [{
       }
     ]
 
-  }
+  },
+  {
+    path: '/account',
+    component: Layout,
+    meta: {
+      title: '资金活动',
+      icon: 'eye'
+    },
+    children: [{
+        path: 'settlement',
+        name: 'settlement',
+        component: () => import('@/views/account/settlement'),
+        meta: {
+          title: '结算列表',
+        }
+      },
+      {
+        path: 'settlement2',
+        name: 'settlement2',
+        component: () => import('@/views/account/settlement'),
+        meta: {
+          title: '结算列表',
+        }
+      }
+    ]
+  },
+  {
+    path: '/mcaManage',
+    component: Layout,
+    meta: {
+      title: '商家管理',
+      icon: 'eye'
+    },
+    children: [{
+        path: 'list',
+        name: 'list',
+        component: () => import('@/views/mcaManage/list'),
+        meta: {
+          title: '商家列表',
+        }
+      },
+      {
+        path: 'list2',
+        name: 'list2',
+        component: () => import('@/views/mcaManage/list'),
+        meta: {
+          title: '商家列表',
+        }
+      }
+    ]
+  },
 ]
 
 const createRouter = () => new Router({
