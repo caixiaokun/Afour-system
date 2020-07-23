@@ -22,7 +22,7 @@
             <el-col :span="6">
                 <el-form-item label="用户状态:">
                     <el-select v-model="SeachForm.status" clearable >
-                        <el-option v-for="(item, index ) in userStauts" :key="index"  :label="item.dictName" :value="item.dictId"></el-option>
+                        <el-option v-for="(item, index ) in userStauts" :key="index"  :label="item.label" :value="item.value"></el-option>
                     </el-select>
                 </el-form-item>
             </el-col>
@@ -43,7 +43,7 @@
     </el-row>
     <!-- 按钮区 -->
     <el-row class='operate-btns mt20'>
-      <el-button size="small" type="success"  icon="el-icon-plus">新增</el-button>
+      <el-button size="small" type="success" @click="dialogFormUser=true" icon="el-icon-plus">新增</el-button>
       <el-button size="small" type="warning" icon="el-icon-edit">修改</el-button>
       <el-button size="small" type="warning" icon="el-icon-download">导出</el-button>
        <el-button size="small" type="danger" icon="el-icon-delete">删除</el-button>
@@ -89,6 +89,55 @@
           </el-pagination>
         </el-col>
     </el-row>
+    <el-dialog title="添加用户" :visible.sync="dialogFormUser">
+        <el-form :model="UserForm" label-width="85px" >
+            <el-form-item label="登陆名称:">
+                <el-input v-model="UserForm.username" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="部门名称:" >
+                 <el-cascader  v-model="UserForm.regionid" :checkStrictly="true"
+                    :emitPath="false"
+                    :props="OrganizaProps" :options="OrganizationTree">
+                 </el-cascader>
+            </el-form-item>
+            <el-form-item label="密码:" >
+                <el-input v-model="UserForm.password" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="手机:" >
+                <el-input v-model="UserForm.phone" autocomplete="off"></el-input>
+            </el-form-item>
+             <el-form-item label="邮箱:" >
+                <el-input v-model="UserForm.email" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="性别:" >
+                <el-select v-model="UserForm.sex" clearable >
+                     <el-option v-for="(item, index ) in sexoptions" :key="index"  :label="item.label" :value="item.value"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="状态:" >
+                <el-select v-model="UserForm.status" clearable >
+                     <el-option v-for="(item, index ) in userStauts" :key="index"  :label="item.label" :value="item.value"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="身份:">
+                <el-radio-group v-model="UserForm.identity">
+                    <el-radio label="0">商户</el-radio>
+                    <el-radio label="1">码商</el-radio>
+                    <el-radio label="2">管理员</el-radio>
+                    <el-radio label="3">通道接口方</el-radio>
+                    <el-radio label="4">开发员</el-radio>
+                </el-radio-group>
+            </el-form-item>
+             <el-form-item label="备注:" >
+                <el-input v-model="UserForm.remarks" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="conforim">确 定</el-button>
+            </el-form-item>
+        </el-form>
+       
+    </el-dialog>
 </div>
 </template>
 
@@ -105,16 +154,86 @@ export default {
           pageIndex:1,
           pageSize:10,
       },
-      userStauts:[],
+      OrganizaProps:{
+        children:"childDept",
+        value: 'id',
+        label: 'name',
+
+      },
+      dialogFormUser:false,
+      UserForm:{
+        email: "",
+        id: "",
+        identity: "",
+        organid: "",
+        password: "",
+        phone: "",
+        regionid:"",
+        remarks: "",
+        sex: "",
+        status: "",
+        superior: "",
+        username: ""
+    },
+      userStauts:[
+        {label:"有效",value:1},
+        {label:"无效",value:0}
+      ],
+      sexoptions:[
+        {label:"男",value:1},
+        {label:"女",value:0}
+      ],
       total:0,
+      OrganizationTree:[],
       dataList:[],
       tableLoading:false
     };
   },
   mounted(){
     this.search()
+    this.getOrganizationTree()
   },
   methods: {
+    getOrganizationTree(){
+        var that = this
+        that.Httpclient({
+                url:'/api/organization/selectTree',
+                data:{},
+                method: "get"
+        }).then(res => {
+            if(res.code==0){
+                console.log(res.data)
+                that.OrganizationTree = that.delgetTreeData(res.data)
+            }
+        })
+    },
+    // 递归判断列表，把最后的children设为undefined
+    delgetTreeData(data){
+      for(var i=0;i<data.length;i++){
+        if(data[i].childDept.length<1){
+          // children若为空数组，则将children设为undefined
+          data[i].childDept=undefined;
+        }else {
+          // children若不为空数组，则继续 递归调用 本方法
+          this.delgetTreeData(data[i].childDept);
+        }
+      }
+      return data;
+    },
+    conforim(){
+        var that = this
+        that.Httpclient({
+            url:'/api/user/saveOrUpdate',
+            data:that.UserForm,
+            method: "POST"
+        }).then(res => {
+            if(res.code==0){
+                that.dialogFormUser = false
+                this.$message({ message: '操作成功',type: 'success'})
+                console.log(res.data)
+            }
+        })
+    },
     search(){
         var that = this
         that.tableLoading =true
