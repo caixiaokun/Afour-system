@@ -50,23 +50,29 @@
     </el-row>
     <!-- 表格 -->
     <el-row class="mt20">
-        <el-table max-height="480" 
-            ref="multipleTable" row-key="id" 
+        <el-table max-height="680" 
+            ref="multipleTable" row-key="id"
             :data="dataList" border tooltip-effect="dark" style="width: 100%"
             v-loading="tableLoading" element-loading-text="拼命加载中">
+            <el-table-column  type="selection" width="55"></el-table-column>
             <el-table-column type="index" fixed label="序号" width="50" header-align="center" align="center"/>
-            <el-table-column label="" width="50" fixed header-align="center" align="center">
-              <template slot-scope="scope">
-                <el-radio-group v-model="selectRowdata">
-                  <el-radio :label="scope.row" class="transparentRadio"> </el-radio>
-                </el-radio-group>
-              </template>
-            </el-table-column>
-            <el-table-column prop="templateCode" fixed label="模板编号" show-overflow-tooltip min-width="200"/>
-            <el-table-column fixed="right" label="操作">
+            <el-table-column prop="id" fixed label="用户id" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="username" fixed label="登陆名称" show-overflow-tooltip  header-align="center" align="center"/>
+            <el-table-column prop="identity" fixed label="身份" show-overflow-tooltip  header-align="center" align="center"/>
+             <el-table-column prop="superior" fixed label="上级" show-overflow-tooltip  header-align="center" align="center"/>
+            <el-table-column prop="organid" fixed label="上上级" show-overflow-tooltip  header-align="center" align="center"/>
+            <el-table-column label="状态" align="center">
                 <template slot-scope="scope">
-                    <el-button type="primary" size="small">查看</el-button>
-                    <el-button type="primary" size="small">编辑</el-button>
+                    <el-button type="text" v-if="scope.row.status==1" size="mini">正常</el-button>
+                    <el-button type="text" v-else size="mini">失效</el-button>
+                </template>
+            </el-table-column>
+            <el-table-column prop="createdate" label="创建时间" show-overflow-tooltip  header-align="center" align="center"/>
+            <el-table-column prop="remarks" label="备注" show-overflow-tooltip  header-align="center" align="center"/>
+            <el-table-column fixed="right" label="操作" align="center">
+                <template slot-scope="scope">
+                    <el-button type="text" size="mini">查看</el-button>
+                    <el-button type="text" size="mini">编辑</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -111,13 +117,26 @@ export default {
   methods: {
     search(){
         var that = this
+        that.tableLoading =true
         that.Httpclient({
-            url:'/api/user/selectAll',
-            data: that.SeachForm,
+            url:'/api/user/selectAll?'+that.changAJaxparm(),
+            data:{},
             method: "get"
       }).then(res => {
-          console.log(res)
+          that.tableLoading =false
+          if(res.code==0){
+            that.dataList = res.data.list
+          }
       })
+    },
+    changAJaxparm(){
+        let ss = ""
+        for(let key in this.SeachForm){
+            if(this.SeachForm[key]!=""){
+                ss+=key+"="+this.SeachForm[key]+"&"
+            }
+        }
+        return ss.slice(0,ss.length-1)
     },
     //表格每页显示数据量变更
     handleSizeChange (val) {
