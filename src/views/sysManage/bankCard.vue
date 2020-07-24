@@ -126,6 +126,7 @@ export default {
           that.tableLoading =false
           if(res.code==0){
               that.dataList = res.data.list
+              that.total = res.data.total
           }
       })
     },
