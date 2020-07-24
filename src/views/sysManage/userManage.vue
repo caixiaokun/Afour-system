@@ -50,7 +50,7 @@
     </el-row>
     <!-- 表格 -->
     <el-row class="mt20">
-        <el-table max-height="680" 
+        <el-table max-height="680"
             ref="multipleTable" row-key="id"
             :data="dataList" border tooltip-effect="dark" style="width: 100%"
             v-loading="tableLoading" element-loading-text="拼命加载中">
@@ -69,10 +69,11 @@
             </el-table-column>
             <el-table-column prop="createdate" label="创建时间" show-overflow-tooltip  header-align="center" align="center"/>
             <el-table-column prop="remarks" label="备注" show-overflow-tooltip  header-align="center" align="center"/>
-            <el-table-column fixed="right" label="操作" align="center">
-                <template slot-scope="scope">
-                    <el-button type="text" size="mini">查看</el-button>
-                    <el-button type="text" size="mini">编辑</el-button>
+            <el-table-column fixed="right" label="操作" min-width="200" align="center">
+                <template slot-scope="scope" >
+                    <el-button type="text"  size="mini">编辑</el-button>
+                    <el-button type="text" size="mini"><span style="color:red;">删除</span></el-button>
+                    <el-button type="text" size="mini">重置</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -95,7 +96,7 @@
                 <el-input v-model="UserForm.username" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="部门名称:" >
-                 <el-cascader  v-model="UserForm.regionid" :checkStrictly="true"
+                 <el-cascader  v-model="UserForm.regionid" :checkStrictly="false"
                     :emitPath="false"
                     :props="OrganizaProps" :options="OrganizationTree">
                  </el-cascader>
@@ -129,7 +130,7 @@
                 </el-radio-group>
             </el-form-item>
              <el-form-item label="备注:" >
-                <el-input v-model="UserForm.remarks" autocomplete="off"></el-input>
+                <el-input v-model="UserForm.remarks" type="textarea" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -222,9 +223,12 @@ export default {
     },
     conforim(){
         var that = this
+        let ajaxObj = that.UserForm
+            ajaxObj.organid = that.UserForm.organid[that.UserForm.organid.length-1]
+            ajaxObj.superior ="总公司"
         that.Httpclient({
             url:'/api/user/saveOrUpdate',
-            data:that.UserForm,
+            data:ajaxObj,
             method: "POST"
         }).then(res => {
             if(res.code==0){

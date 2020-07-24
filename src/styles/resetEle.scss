@@ -14,7 +14,7 @@
 
 .main>div{
 	background-color: #fff;
-	padding-bottom: 24px;
+	padding-bottom: 30px;
 }
 
 .main>div.hasRemarks{
@@ -27,8 +27,8 @@
 
 /*表格的样式重置*/
 div.el-form-item__content input.el-input__inner{
-	height: 24px;
-	line-height: 24px;
+	height: 30px;
+	line-height: 30px;
 }
 
 span.el-input-number__decrease,
@@ -53,23 +53,23 @@ tbody td .el-input-number__increase{
 }
 
 tbody td .el-input-number{
-	line-height: 24px;
+	line-height: 30px;
 }
 
 thead>tr>th.is-leaf{
 	background-color: #E5E9F2;
 	color: #475669;
 	font-size: 12px;
-	line-height: 24px;
-	height: 24px;
+	line-height: 30px;
+	height: 30px;
 	padding: 0;
 }
 
 tbody>tr.el-table__row>td{
 	font-size: 12px;
 	color: #1F2D3D;
-	line-height: 24px;
-	height: 24px;
+	line-height: 30px;
+	height: 30px;
 	padding: 0;
 }
 /** 合并的table的第一个td背景透明问题*/
@@ -88,8 +88,8 @@ thead>tr>th.is-leaf>div,tbody>tr.el-table__row>td>div{
 
 div.el-table .cell{
 	padding: 0 8px;
-	height: 24px;
-	line-height: 24px;
+	height: 30px;
+	line-height: 30px;
 	box-sizing: border-box;
 }
 
@@ -106,15 +106,15 @@ div.el-table .cell{
 
 /*内容面板的设置
 div.main>div{
-	padding: 24px;
+	padding: 30px;
 }*/
 
 div.main>div>div:not(.el-dialog__wrapper){
-	padding: 0 24px;
+	padding: 0 30px;
 }
 
 div.main>div>div:first-child:not(.banners){
-	padding-top: 24px;
+	padding-top: 30px;
 }
 
 /*筛选面板中的输入框和下拉菜单的控制*/
@@ -342,7 +342,7 @@ div.main>div>div:first-child:not(.banners){
 }
 
 .toolbar .time-range div.el-date-editor{
-	margin-bottom: 24px;
+	margin-bottom: 30px;
 	width: 165px;
 }
 
@@ -419,7 +419,7 @@ button.el-button--mini{
 /*页码的设置*/
 .col-pagination{
 	padding: 0 !important;
-	margin-top: 24px;
+	margin-top: 30px;
 	margin-bottom: 12px;
 	text-align: right;
 }
@@ -496,7 +496,7 @@ button.el-button--mini{
 }
 
 .hasRemarks .left>div:last-child{
-	padding-bottom: 24px;
+	padding-bottom: 30px;
 }
 
 .hasRemarks .right{
@@ -585,7 +585,7 @@ button.el-button--mini{
 }
 .dialogFormClass .el-dialog__header{
 	padding: 10px 20px 0px;
-	min-height: 24px;
+	min-height: 30px;
 }
 .dialogFormClass .textareaClass .el-form-item__content{
 	width: 425px;
@@ -680,12 +680,12 @@ button.el-button--mini{
 }
 
 .dialogFormClass fieldset.fieldset_horizon_padding{
-	padding-left: 24px;
-	padding-right: 24px;
+	padding-left: 30px;
+	padding-right: 30px;
 }
 
 .dialogFormClass .fieldset_style{
-	padding: 12px 24px 12px 24px;
+	padding: 12px 24px 12px 30px;
 	margin-top: 12px;
 	border-width: 2px;
 	border-style: groove;
@@ -722,7 +722,7 @@ button.el-button--mini{
 }
 
 .toolbar .margin_bottom{
-	margin-bottom: 24px;
+	margin-bottom: 30px;
 }
 
 .dialogFormClass .margin_top{
@@ -793,7 +793,7 @@ button.el-button--mini{
 }
 
 .el-icon-question{
-	font-size: 24px;
+	font-size: 30px;
 	vertical-align: middle;
 }
  
