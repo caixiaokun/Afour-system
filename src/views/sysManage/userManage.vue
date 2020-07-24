@@ -371,12 +371,12 @@ export default {
             url:'/api/user/selectAll?'+that.changAJaxparm(),
             data:{},
             method: "get"
-      }).then(res => {
-          that.tableLoading =false
-          if(res.code==0){
-            that.dataList = res.data.list
-          }
-      })
+        }).then(res => {
+            that.tableLoading =false
+            if(res.code==0){
+                that.dataList = res.data.list
+            }
+        })
     },
     changAJaxparm(){
         let ss = ""
