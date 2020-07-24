@@ -54,13 +54,13 @@
             ref="multipleTable" row-key="id"
             :data="dataList" border tooltip-effect="dark" style="width: 100%"
             v-loading="tableLoading" element-loading-text="拼命加载中">
-            <el-table-column  type="selection" width="55"></el-table-column>
+            <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column type="index" fixed label="序号" width="50" header-align="center" align="center"/>
             <el-table-column prop="id" fixed label="用户id" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="username" fixed label="登陆名称" show-overflow-tooltip  header-align="center" align="center"/>
-            <el-table-column prop="identity" fixed label="身份" show-overflow-tooltip  header-align="center" align="center"/>
-             <el-table-column prop="superior" fixed label="上级" show-overflow-tooltip  header-align="center" align="center"/>
-            <el-table-column prop="organid" fixed label="上上级" show-overflow-tooltip  header-align="center" align="center"/>
+            <el-table-column prop="username" fixed  label="登陆名称" show-overflow-tooltip  header-align="center" align="center"/>
+            <el-table-column prop="identity"  label="身份" show-overflow-tooltip   header-align="center" align="center"/>
+            <el-table-column prop="superior"  label="上级" show-overflow-tooltip  header-align="center" align="center"/>
+            <el-table-column prop="organid"  label="上上级" show-overflow-tooltip  header-align="center" align="center"/>
             <el-table-column label="状态" align="center">
                 <template slot-scope="scope">
                     <el-button type="text" v-if="scope.row.status==1" size="mini">正常</el-button>
@@ -296,5 +296,6 @@ export default {
   }
   .mt20{
     margin-left: 20px;
+    min-width: 0;
   }
 </style>

@@ -99,56 +99,48 @@
         />
         <el-table-column
           prop="shopname"
-          fixed
           label="用户名称"
           show-overflow-tooltip
           min-width="200"
         />
         <el-table-column
           prop="templateCode"
-          fixed
           label="账户类型"
           show-overflow-tooltip
           min-width="200"
         />
         <el-table-column
           prop="templateCode"
-          fixed
           label="上级编号"
           show-overflow-tooltip
           min-width="200"
         />
         <el-table-column
           prop="templateCode"
-          fixed
           label="状态"
           show-overflow-tooltip
           min-width="200"
         />
         <el-table-column
           prop="templateCode"
-          fixed
           label="秘钥"
           show-overflow-tooltip
           min-width="200"
         />
         <el-table-column
           prop="templateCode"
-          fixed
           label="余额"
           show-overflow-tooltip
           min-width="200"
         />
         <el-table-column
           prop="templateCode"
-          fixed
           label="冻结金额"
           show-overflow-tooltip
           min-width="200"
         />
         <el-table-column
           prop="createdate"
-          fixed
           label="创建时间"
           show-overflow-tooltip
           min-width="200"
