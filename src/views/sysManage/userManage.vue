@@ -43,24 +43,22 @@
     </el-row>
     <!-- 按钮区 -->
     <el-row class='operate-btns mt20'>
-      <el-button size="small" type="success" @click="dialogFormUser=true" icon="el-icon-plus">新增</el-button>
-      <el-button size="small" type="warning" icon="el-icon-edit">修改</el-button>
-      <el-button size="small" type="warning" icon="el-icon-download">导出</el-button>
-       <el-button size="small" type="danger" icon="el-icon-delete">删除</el-button>
+      <el-button size="small" type="success" @click="Opendialog" icon="el-icon-plus">新增</el-button>
+      <el-button size="small" type="danger" @click="moreDel" icon="el-icon-delete">批量删除</el-button>
     </el-row>
     <!-- 表格 -->
     <el-row class="mt20">
         <el-table max-height="680"
-            ref="multipleTable" row-key="id"
+            ref="multipleTable" row-key="id"  @selection-change="handleSelectionChange"
             :data="dataList" border tooltip-effect="dark" style="width: 100%"
             v-loading="tableLoading" element-loading-text="拼命加载中">
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column type="index" fixed label="序号" width="50" header-align="center" align="center"/>
             <el-table-column prop="id" fixed label="用户id" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column prop="username" fixed  label="登陆名称" show-overflow-tooltip  header-align="center" align="center"/>
-            <el-table-column prop="identity"  label="身份" show-overflow-tooltip   header-align="center" align="center"/>
-            <el-table-column prop="superior"  label="上级" show-overflow-tooltip  header-align="center" align="center"/>
-            <el-table-column prop="organid"  label="上上级" show-overflow-tooltip  header-align="center" align="center"/>
+            <el-table-column prop="identity"  label="身份" show-overflow-tooltip :formatter="formatDel" header-align="center" align="center"/>
+            <el-table-column prop="superior"  label="上级"   show-overflow-tooltip  header-align="center" align="center"/>
+            <el-table-column prop="organname"  label="部门名称" show-overflow-tooltip  header-align="center" align="center"/>
             <el-table-column label="状态" align="center">
                 <template slot-scope="scope">
                     <el-button type="text" v-if="scope.row.status==1" size="mini">正常</el-button>
@@ -71,8 +69,8 @@
             <el-table-column prop="remarks" label="备注" show-overflow-tooltip  header-align="center" align="center"/>
             <el-table-column fixed="right" label="操作" min-width="200" align="center">
                 <template slot-scope="scope" >
-                    <el-button type="text"  size="mini">编辑</el-button>
-                    <el-button type="text" size="mini"><span style="color:red;">删除</span></el-button>
+                    <el-button type="text"  size="mini" style="color:green;" @click="EditUser(scope.row)">编辑</el-button>
+                    <el-button type="text" size="mini"><span style="color:red;" @click="DelUser(scope.row)">删除</span></el-button>
                     <el-button type="text" size="mini">重置</el-button>
                 </template>
             </el-table-column>
@@ -90,13 +88,13 @@
           </el-pagination>
         </el-col>
     </el-row>
-    <el-dialog title="添加用户" :visible.sync="dialogFormUser">
+    <el-dialog :title="dialogFormTitle" :visible.sync="dialogFormUser">
         <el-form :model="UserForm" label-width="85px" >
             <el-form-item label="登陆名称:">
                 <el-input v-model="UserForm.username" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="部门名称:" >
-                 <el-cascader  v-model="UserForm.regionid" :checkStrictly="false"
+                 <el-cascader  v-model="UserForm.organid" :checkStrictly="false"
                     :emitPath="false"
                     :props="OrganizaProps" :options="OrganizationTree">
                  </el-cascader>
@@ -133,7 +131,7 @@
                 <el-input v-model="UserForm.remarks" type="textarea" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button @click="dialogFormUser = false">取 消</el-button>
                 <el-button type="primary" @click="conforim">确 定</el-button>
             </el-form-item>
         </el-form>
@@ -146,48 +144,50 @@
 export default {
   data() {
     return {
-      SeachForm:{//表单
-          username: "",
-          phone:"",
-          status:"",
-          startcreatedate:"",
-          endcreatedate:"",
-          pageIndex:1,
-          pageSize:10,
-      },
-      OrganizaProps:{
+        SeachForm:{//表单
+            username: "",
+            phone:"",
+            status:"",
+            startcreatedate:"",
+            endcreatedate:"",
+            pageIndex:1,
+            pageSize:10,
+        },
+        OrganizaProps:{
         children:"childDept",
         value: 'id',
         label: 'name',
 
-      },
-      dialogFormUser:false,
-      UserForm:{
-        email: "",
-        id: "",
-        identity: "",
-        organid: "",
-        password: "",
-        phone: "",
-        regionid:"",
-        remarks: "",
-        sex: "",
-        status: "",
-        superior: "",
-        username: ""
-    },
-      userStauts:[
-        {label:"有效",value:1},
-        {label:"无效",value:0}
-      ],
-      sexoptions:[
-        {label:"男",value:1},
-        {label:"女",value:0}
-      ],
-      total:0,
-      OrganizationTree:[],
-      dataList:[],
-      tableLoading:false
+        },
+        dialogFormUser:false,
+        dialogFormTitle:"添加用户",
+        UserForm:{
+            email: "",
+            id: "",
+            identity: "",
+            organid: "",
+            password: "",
+            phone: "",
+            remarks: "",
+            sex: "",
+            status: "",
+            superior: "",
+            username: ""
+        },
+        userStauts:[
+        {label:"正常",value:"1"},
+        {label:"无效",value:"0"}
+        ],
+        sexoptions:[
+        {label:"男",value:"1"},
+        {label:"女",value:"0"}
+        ],
+        total:0,
+        OrganizationTree:[],
+        dataList:[],
+        tableLoading:false,
+        multipleData:[]
+        
     };
   },
   mounted(){
@@ -195,6 +195,25 @@ export default {
     this.getOrganizationTree()
   },
   methods: {
+    formatDel(row, column){
+        if(column.property=="identity"){
+          if( row.identity ==0  ){
+            return "商户";
+          }else if( row.identity == 1 ){
+            return "码商";
+          }else if( row.identity == 2 ){
+            return "管理员";
+          }else if( row.identity == 3 ){
+            return "通道接口方";
+          }else if( row.identity == 4 ){
+            return "开发员";
+          }
+        }
+    },
+    handleSelectionChange(val){
+        this.multipleData = val
+    },
+    // 获取机构数据
     getOrganizationTree(){
         var that = this
         that.Httpclient({
@@ -221,11 +240,118 @@ export default {
       }
       return data;
     },
+    // 寻找父节点id
+    findAncestry (arr, id) {
+        let stack = [];
+        let going = true;
+        let walker = (arr, id) => {
+            arr.forEach(item => {
+                if (!going) return;
+                stack.push(item['id']);
+                if (item['id'] === id) {
+                    going = false;
+                } else if (item['childDept']) {
+                    walker(item['childDept'], id);
+                } else {
+                    stack.pop();
+                }
+            });
+            if (going) stack.pop();
+        }
+        walker(arr, id);
+        return stack
+    },
+    Opendialog(){
+        this.dialogFormTitle = "添加用户"
+        this.UserForm={
+            email: "",
+            id: "",
+            identity: "",
+            organid: "",
+            password: "",
+            phone: "",
+            remarks: "",
+            sex: "",
+            status: "",
+            superior: "",
+            username: ""
+        }
+        this.dialogFormUser = true
+
+    },
+    // 编辑用户
+    EditUser(row){
+        var that = this
+        that.dialogFormTitle = "编辑用户"
+        that.UserForm={
+            email: row.email,
+            id: row.id,
+            identity: row.identity,
+            organid: that.findAncestry(that.OrganizationTree,row.organid),
+            password: row.password,
+            phone: row.phone,
+            remarks: row.remarks,
+            sex: row.sex,
+            status: row.status,
+            superior: row.superior,
+            username: row.username
+        }
+        that.dialogFormUser = true
+
+    },
+    //删除用户
+    DelUser(row){
+        this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+           this.Httpclient({
+            url:'/api/user/delete',
+            data: row.id,
+            method: "delete"
+            }).then(res => {
+                if(res.code==0){
+                    this.$message({ message: '操作成功',type: 'success'})
+                    this.search()
+                }
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+    },
+    //批量删除
+    moreDel(){
+        var  that = this
+        if(that.multipleData.length==0){
+            that.$message.warning('请先勾选需要删除的记录')
+            return false
+        }
+        let objData = []
+        that.multipleData.forEach(element => {
+            objData.push(element.id)
+        });
+        that.Httpclient({
+            url:'/api/user/deleteByIds',
+            data:objData,
+            method: "POST"
+        }).then(res => {
+            if(res.code==0){
+                that.dialogFormUser = false
+                this.$message({ message: '批量操作成功',type: 'success'})
+                this.search()
+            }
+        })
+    },
     conforim(){
         var that = this
         let ajaxObj = that.UserForm
             ajaxObj.organid = that.UserForm.organid[that.UserForm.organid.length-1]
-            ajaxObj.superior ="总公司"
+            ajaxObj.superior =""
+        
         that.Httpclient({
             url:'/api/user/saveOrUpdate',
             data:ajaxObj,
@@ -234,7 +360,7 @@ export default {
             if(res.code==0){
                 that.dialogFormUser = false
                 this.$message({ message: '操作成功',type: 'success'})
-                console.log(res.data)
+                this.search()
             }
         })
     },
