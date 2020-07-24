@@ -158,7 +158,35 @@ export const constantRoutes = [{
         name: 'orderStatistics',
         component: () => import('@/views/orderManage/orderStatistics'),
         meta: {
-          title: '订单列表',
+          title: '订单统计',
+        }
+      }
+    ]
+
+  },
+  // 通道管理
+  {
+    path: '/gatewayManage',
+    component: Layout,
+    meta: {
+      title: '通道管理',
+      icon: 'eye-open'
+    },
+    children:[
+      {
+        path: 'gatewayList',
+        name: 'gatewayList',
+        component: () => import('@/views/gatewayManage/gatewayList'),
+        meta: {
+          title: '通道列表',
+        }
+      },
+      {
+        path: 'gatewayList',
+        name: 'gatewayList',
+        component: () => import('@/views/gatewayManage/gatewayList'),
+        meta: {
+          title: '通道列表',
         }
       }
     ]
