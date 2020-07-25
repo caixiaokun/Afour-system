@@ -116,7 +116,7 @@ export const constantRoutes = [{
     component: Layout,
     meta: {
       title: '商家管理',
-      icon: 'eye'
+      icon: 'eye-open'
     },
     children: [{
         path: 'list',
@@ -170,7 +170,7 @@ export const constantRoutes = [{
     component: Layout,
     meta: {
       title: '通道管理',
-      icon: 'eye-open'
+      icon: 'international'
     },
     children:[
       {
@@ -182,8 +182,8 @@ export const constantRoutes = [{
         }
       },
       {
-        path: 'gatewayList',
-        name: 'gatewayList',
+        path: 'gatewayList2',
+        name: 'gatewayList2',
         component: () => import('@/views/gatewayManage/gatewayList'),
         meta: {
           title: '通道列表',

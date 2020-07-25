@@ -1,96 +1,93 @@
 <template>
-    <div>
-    <!-- 表格 -->
-    <el-table
-      ref="multipleTable"
-      :data="tableData"
-      tooltip-effect="dark"
-      style="width: 100%"
-      @selection-change="handleSelectionChange">
-      <el-table-column
-        type="selection"
-        width="55">
-      </el-table-column>
-      <el-table-column
-        label="日期"
-        width="120">
-        <template slot-scope="scope">{{ scope.row.date }}</template>
-      </el-table-column>
-      <el-table-column
-        prop="name"
-        label="姓名"
-        width="120">
-      </el-table-column>
-      <el-table-column
-        prop="address"
-        label="地址"
-        show-overflow-tooltip>
-      </el-table-column>
-    </el-table>
-</div>
+  <el-row class="finenterClass">
+    <el-col :span="10" :offset="1" >
+      <div class="Card">
+          <span class="TitleName">总交收款</span>
+          <div class="ContentClass">
+            <img class="imgClass" src="../../assets/Coins-2.png" alt="">
+            <span class="moneyClasss">{{TotalCollection}} 元</span>
+          </div>
+      </div>
+    </el-col>
+    <el-col :span="10" :offset="1">
+      <div class="Card">
+          <p class="TitleName">总交易笔数</p>
+          <div class="ContentClass">
+            <img class="imgClass" src="../../assets/tab_ss.png" alt="">
+            <span class="moneyClasss">{{totalOrder}} 笔</span>
+          </div>
+      </div>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      tableData: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-08',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-06',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-      }],
-      multipleSelection: []
-    };
+      TotalCollection:"",
+      totalOrder:""
+    }
   },
-  created: function() {
+  mounted(){
+    this.getTotalCollection()
+    this.getTtotalOrder()
   },
   methods: {
-   
+    getTotalCollection(){
+      var that = this
+      that.Httpclient({
+          url:'/api/finance/totalCollection',
+          data:{},
+          method: "get"
+      }).then(res => {
+          if(res.code==0){
+            that.TotalCollection = res.data
+          }
+      })
+    },
+    getTtotalOrder(){
+      var that = this
+      that.Httpclient({
+          url:'/api/finance/totalOrder',
+          data:{},
+          method: "get"
+      }).then(res => {
+          if(res.code==0){
+            that.totalOrder = res.data
+          }
+      })
+    }
   }
 };
 </script>
 
 <style>
-.upload {
-  width: 200px;
-  margin: 20px;
-  float: right;
-}
-.my-pic {
-  width: 48px;
-  height: 27px;
-}
-.pagination {
-  margin-top: 20px;
-  margin-right: 50px;
-  float: right;
-}
-.search {
-  width: 50%;
-  /* margin-left: 50%; */
-}
+  .finenterClass{
+    /* margin: 30px 10px 10px 10px; */
+    background-color: #eff1f4;
+    min-height: 768px;
+   
+  }
+  .Card{
+    height: 300px;
+    margin-top: 20px;
+    padding: 10px 20px 20px 20px;
+    background-color:white;
+    box-shadow: 5px white, 5px white; 
+    /* border: 1px solid #000; */
+  }
+  .TitleName{
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  .imgClass{
+    vertical-align:top;
+    margin-right: 20px;
+  }
+  .moneyClasss{
+    float: right;
+    font-size: 36px;
+  }
 </style>
