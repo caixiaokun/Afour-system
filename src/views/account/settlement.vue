@@ -44,9 +44,9 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="状态">
-              <el-select v-model="SeachForm.optType" clearable>
+              <el-select v-model="SeachForm.status" clearable>
                 <el-option
-                  v-for="(item, index) in status"
+                  v-for="(item, index) in statusOption"
                   :key="index"
                   :label="item.dictName"
                   :value="item.dictId"
@@ -72,181 +72,161 @@
       </el-col>
     </el-row>
     <!-- 按钮区 -->
-    <el-row class="operate-btns mt20">
-      <el-button size="small" type="danger" icon="el-icon-setting"
-        >绑定码商</el-button
-      >
+    <el-row class='operate-btns mt20'>
+      <el-button size="small" type="success"  icon="el-icon-plus">新增</el-button>
     </el-row>
     <!-- 表格 -->
     <el-row class="mt20">
-      <el-table
-        max-height="480"
-        ref="multipleTable"
-        row-key="id"
-        :data="dataList"
-        border
-        tooltip-effect="dark"
-        style="width: 100%"
-        v-loading="tableLoading"
-        element-loading-text="拼命加载中"
-      >
-        <el-table-column
-          type="index"
-          fixed
-          label="编号"
-          width="50"
-          header-align="center"
-          align="center"
-        />
-        <el-table-column
-          prop="templateCode"
-          fixed
-          label="申请商户"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          fixed
-          label="下发中的码商"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          fixed
-          label="金额"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          fixed
-          label="实到金额"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          fixed
-          label="手续费"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          fixed
-          label="状态"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          fixed
-          label="银行"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          fixed
-          label="卡号"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          fixed
-          label="卡名"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          fixed
-          label="创建时间"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          fixed
-          label="下发备注"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          fixed
-          label="操作"
-          show-overflow-tooltip
-          min-width="200"
-        />
-      </el-table>
-      <!--工具条-->
-      <el-col :span="24" class="toolbar col-pagination">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentPageChange"
-          :current-page="SeachForm.pageIndex"
-          :page-sizes="[10, 50, 100, 200]"
-          :page-size="SeachForm.pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-        ></el-pagination>
-      </el-col>
+        <el-table max-height="480"  row-key="id" 
+            :data="dataList" border tooltip-effect="dark" style="width: 100%"
+            v-loading="tableLoading" element-loading-text="拼命加载中">
+            <el-table-column type="index" fixed label="序号" width="50" header-align="center" align="center"/>
+            <el-table-column prop="shopName"  label="申请商户" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="price"  label="金额" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="comePrice"  label="实到金额" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="proceduresPrice"  label="手续费" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="state"  label="状态" show-overflow-tooltip header-align="center" align="center">
+              <template slot-scope="scope">
+                 <span v-if="scope.row.state==1" style="color:green;">下发成功</span>
+                 <span v-else style="color:red;">下发失败</span>
+            </template>
+            </el-table-column>
+            <el-table-column prop="bank"  label="银行" show-overflow-tooltip header-align="center" align="center"/>
+             <el-table-column prop="cardNum"  label="卡号" show-overflow-tooltip header-align="center" align="center"/>
+             <el-table-column prop="cardName"  label="卡名" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="createdate"  label="创建时间" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="remarks"  label="备注" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop=""  label="操作" show-overflow-tooltip header-align="center" align="center">
+             <template slot-scope="scope">
+                 <el-button type="text" size="mini">下发备注</el-button>
+            </template>
+            </el-table-column>
+        </el-table>
+        <!--工具条-->
+        <el-col :span="24" class="toolbar col-pagination">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentPageChange"
+            :current-page="SeachForm.pageNum"
+            :page-sizes="[10, 50, 100, 200]"
+            :page-size="SeachForm.pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total">
+          </el-pagination>
+        </el-col>
+
     </el-row>
-  </div>
+</div>
 </template>
 
 <script>
 export default {
-  name: "settlement",
   data() {
     return {
-      SeachForm: {
-        pageIndex: 1,
-        pageSize: 10
+      SeachForm:{//表单
+          shopName:"",
+          status:"",
+          startcreatedate:"",
+          endcreatedate:"",
+          pageIndex:1,
+          pageSize:10,
       },
-      status: [],
-      total: 0,
-      dataList: [],
-      tableLoading: false
+      statusOption:[
+
+      ],
+      userTypeList:[
+        {label:"商户",value:"0"},
+        {label:"码商",value:"1"},
+        {label:"管理员",value:"2"},
+        {label:"通道接口方",value:"3"},
+        {label:"开发员",value:"4"},
+      ],
+      total:0,
+      dataList:[],
+      tableLoading:false
     };
   },
-  mounted() {
-    this.search();
+  mounted(){
+    this.search()
   },
   methods: {
+    search(){
+      var that = this
+      that.tableLoading =true
+      that.Httpclient({
+          url:'/api/capital/selectAll?'+that.changAJaxparm(),
+          data:{},
+          method: "get"
+      }).then(res => {
+          that.tableLoading =false
+          if(res.code==0){
+              that.dataList = res.data.list
+              that.total = res.data.total
+          }
+      })
+    },
+    changAJaxparm(){
+        let ss = ""
+        for(let key in this.SeachForm){
+            if(this.SeachForm[key]!=""){
+                ss+=key+"="+this.SeachForm[key]+"&"
+            }
+        }
+        return ss.slice(0,ss.length-1)
+    },
+    conforim(){
+        var that = this
+        let ajaxObj = that.UserForm
+            ajaxObj.organid = that.UserForm.organid[that.UserForm.organid.length-1]
+            ajaxObj.superior =""
+        
+        that.Httpclient({
+            url:'/api/user/saveOrUpdate',
+            data:ajaxObj,
+            method: "POST"
+        }).then(res => {
+            if(res.code==0){
+                that.dialogFormCard = false
+                this.$message({ message: '操作成功',type: 'success'})
+                this.search()
+            }
+        })
+    },
     //表格每页显示数据量变更
-    handleSizeChange: function(val) {
-      this.SeachForm.pageSize = val;
-      this.search(1);
+    handleSizeChange (val) {
+        this.SeachForm.pageSize = val;
+        this.search();
     },
     //第几页切换
     handleCurrentPageChange(val) {
-      this.SeachForm.pageNum = val;
-      this.search(1);
+        this.SeachForm.pageNum= val;
+        this.search();
     },
-    // 查询
-    search() {
-      this.tableLoading = true
-      this.Httpclient({
-        url: "/api/capitallog/selectAll",
-        params: {
-          ...this.SeachForm,
-          userToken: localStorage.getItem('token')
-        },
-        method: "get"
-      }).then(res => {
-        this.tableLoading = false
-        this.dataList = res.data.list
-      });
-    }
+
   }
 };
 </script>
 
-<style lang="scss" scoped>
-@import "~@/styles/public.scss";
+<style>
+  /*表格的操作按钮样式的*/
+  .operate-btns{
+    margin-top: 12px;
+  }
+
+  .operate-btns button.el-button{
+    float: left;
+    margin-right: 8px;
+    margin-left: 0;
+    margin-bottom: 12px;
+  }
+  .operate-btns .tips{
+    vertical-align: middle;
+  }
+  .opeattionClass{
+    margin-left: 20px;
+  }
+  .mt20{
+    margin-left: 20px;
+    min-width: 0;
+  }
 </style>

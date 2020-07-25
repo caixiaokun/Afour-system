@@ -84,6 +84,7 @@ export const constantRoutes = [{
     ]
 
   },
+  // 资金活动 
   {
     path: '/account',
     component: Layout,
@@ -109,6 +110,7 @@ export const constantRoutes = [{
       }
     ]
   },
+  // 商家管理
   {
     path: '/mcaManage',
     component: Layout,
@@ -133,6 +135,62 @@ export const constantRoutes = [{
         }
       }
     ]
+  },
+  // 订单管理
+  {
+    path: '/orderManage',
+    component: Layout,
+    meta: {
+      title: '订单管理',
+      icon: 'eye-open'
+    },
+    children:[
+      {
+        path: 'orderList',
+        name: 'orderList',
+        component: () => import('@/views/orderManage/orderList'),
+        meta: {
+          title: '订单列表',
+        }
+      },
+      {
+        path: 'orderStatistics',
+        name: 'orderStatistics',
+        component: () => import('@/views/orderManage/orderStatistics'),
+        meta: {
+          title: '订单统计',
+        }
+      }
+    ]
+
+  },
+  // 通道管理
+  {
+    path: '/gatewayManage',
+    component: Layout,
+    meta: {
+      title: '通道管理',
+      icon: 'eye-open'
+    },
+    children:[
+      {
+        path: 'gatewayList',
+        name: 'gatewayList',
+        component: () => import('@/views/gatewayManage/gatewayList'),
+        meta: {
+          title: '通道列表',
+        }
+      },
+      {
+        path: 'gatewayList',
+        name: 'gatewayList',
+        component: () => import('@/views/gatewayManage/gatewayList'),
+        meta: {
+          title: '通道列表',
+        }
+      }
+    ]
+
   },
 ]
 

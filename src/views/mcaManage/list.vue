@@ -71,87 +71,20 @@
     </el-row>
     <!-- 表格 -->
     <el-row class="mt20">
-      <el-table
-        max-height="480"
-        ref="multipleTable"
-        row-key="id"
-        :data="dataList"
-        border
-        tooltip-effect="dark"
-        style="width: 100%"
-        v-loading="tableLoading"
-        element-loading-text="拼命加载中"
-      >
-        <el-table-column
-          type="index"
-          fixed
-          label="用户id"
-          width="50"
-          header-align="center"
-          align="center"
-        />
-        <el-table-column
-          prop="templateCode"
-          fixed
-          label="登录账号"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="shopname"
-          label="用户名称"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          label="账户类型"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          label="上级编号"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          label="状态"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          label="秘钥"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          label="余额"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          label="冻结金额"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="createdate"
-          label="创建时间"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column
-          prop="templateCode"
-          fixed
-          label="操作"
-          show-overflow-tooltip
-          min-width="200"
-        />
+      <el-table max-height="480" ref="multipleTable" row-key="id" :data="dataList"
+        border tooltip-effect="dark"  style="width: 100%"
+        v-loading="tableLoading" element-loading-text="拼命加载中" >
+        <el-table-column type="index"  fixed label="用户id" width="50" header-align="center" align="center" />
+        <el-table-column  prop="templateCode" label="登录账号"  show-overflow-tooltip />
+        <el-table-column prop="shopname" label="用户名称" show-overflow-tooltip/>
+        <el-table-column prop="templateCode" label="账户类型" show-overflow-tooltip/>
+        <el-table-column prop="templateCode" label="上级编号" show-overflow-tooltip />
+        <el-table-column  prop="status" label="状态" show-overflow-tooltip />
+        <el-table-column prop="mdfivekey" label="秘钥" show-overflow-tooltip />
+        <el-table-column prop="templateCode" label="余额" show-overflow-tooltip />
+        <el-table-column prop="templateCode" label="冻结金额" show-overflow-tooltip />
+        <el-table-column prop="createdate" label="创建时间" show-overflow-tooltip />
+        <el-table-column  prop="templateCode" label="操作"  show-overflow-tooltip/>
       </el-table>
       <!--工具条-->
       <el-col :span="24" class="toolbar col-pagination">
@@ -175,6 +108,9 @@ export default {
   data() {
     return {
       SeachForm: {
+        shopname:"",
+        startcreatedate:"",
+        endcreatedate:"",
         pageIndex: 1,
         pageSize: 10
       },
@@ -200,19 +136,29 @@ export default {
     },
     // 查询
     search() {
-      this.tableLoading = true
-      this.Httpclient({
-        url: "/api/shop/selectAll",
-        params: {
-          ...this.SeachForm,
-          userToken: localStorage.getItem('token')
-        },
-        method: "get"
-      }).then(res => {
-        this.tableLoading = false
-        this.dataList = res.data.list
-      });
-    }
+      var that = this
+      that.tableLoading =true
+      that.Httpclient({
+            url:'/api/shop/selectAll?'+that.changAJaxparm(),
+            data:{},
+            method: "get"
+        }).then(res => {
+            that.tableLoading =false
+            if(res.code==0){
+                that.dataList = res.data.list
+                that.total = res.data.total
+            }
+        })
+    },
+    changAJaxparm(){
+      let ss = ""
+      for(let key in this.SeachForm){
+          if(this.SeachForm[key]!=""){
+              ss+=key+"="+this.SeachForm[key]+"&"
+          }
+      }
+      return ss.slice(0,ss.length-1)
+    },
   }
 };
 </script>
