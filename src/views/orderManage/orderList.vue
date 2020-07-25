@@ -5,24 +5,41 @@
         <el-col :span="24" class="toolbar">
             <el-form :inline="true" :model="SeachForm">
             <el-col :span="6">
-                <el-form-item label="用户id:">
-                    <el-input v-model="SeachForm.optuser" placeholder="用户id" ></el-input>
+                <el-form-item label="下游订单号:">
+                    <el-input v-model="SeachForm.orderNo" placeholder="下游订单号" ></el-input>
                 </el-form-item>
             </el-col>
            <el-col :span="6">
-                <el-form-item label="订单号:">
-                    <el-input v-model="SeachForm.optuser" placeholder="订单号" ></el-input>
+                <el-form-item label="平台订单号:">
+                    <el-input v-model="SeachForm.orderNo" placeholder="平台订单号" ></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="6">
+                <el-form-item label="三分订单号:">
+                    <el-input v-model="SeachForm.orderNo" placeholder="三分订单号" ></el-input>
                 </el-form-item>
             </el-col>
              <el-col :span="6">
-                <el-form-item label="用户类型:">
+                <el-form-item label="商家id:">
+                     <el-select v-model="SeachForm.userType" clearable >
+                        <el-option v-for="(item, index ) in userTypeList" :key="index"  :label="item.label" :value="item.value"></el-option>
+                    </el-select>
+                </el-form-item>
+            </el-col>
+            <el-col :span="6">
+                <el-form-item label="账户id:">
+                    <el-input v-model="SeachForm.orderNo" placeholder="账户id" ></el-input>
+                </el-form-item>
+            </el-col>
+             <el-col :span="6">
+                <el-form-item label="支付类型:">
                      <el-select v-model="SeachForm.userType" clearable >
                         <el-option v-for="(item, index ) in userTypeList" :key="index"  :label="item.label" :value="item.value"></el-option>
                     </el-select>
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="操作时间:">
+                <el-form-item label="创建时间:">
                    <el-date-picker v-model="SeachForm.startcreatedate" type="date" placeholder="选择开始日期"></el-date-picker>
                    <el-date-picker v-model="SeachForm.endcreatedate" type="date" placeholder="选择结束日期"></el-date-picker>
                 </el-form-item>
@@ -36,27 +53,33 @@
             </el-form>
         </el-col>
     </el-row>
-    <!-- 按钮区 -->
-    <el-row class='operate-btns mt20'>
-      <el-button size="small" type="success"  icon="el-icon-plus">新增</el-button>
-    </el-row>
     <!-- 表格 -->
     <el-row class="mt20">
         <el-table max-height="480"  row-key="id" 
             :data="dataList" border tooltip-effect="dark" style="width: 100%"
             v-loading="tableLoading" element-loading-text="拼命加载中">
             <el-table-column type="index" fixed label="序号" width="50" header-align="center" align="center"/>
-            <el-table-column prop="optUser"  label="操作人" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="orderNo"  label="订单号" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="optType"  label="操作类型" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="userId"  label="用户id" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="userType"  label="用户类型" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="updatePlace"  label="变动后金额" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="orderNo"  label="下游订单" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="orderNo"  label="平台订单" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="orderNo"  label="三方订单" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="payuser"  label="账号" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="orderNo"  label="收款" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="shopname"  label="商户" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="status"  label="状态" show-overflow-tooltip header-align="center" align="center">
+                <template slot-scope="scope">
+                   <span v-if="scope.row.status" style="color:green;">已付款</span>
+                   <span v-else  style="color:red;">未付款</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="orderPrice"  label="下单金额" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="orderPriceAll"  label="应付金额" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="gatewayid"  label="通道类型" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column prop="createdate"  label="创建时间" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="upType"  label="加减" show-overflow-tooltip header-align="center" align="center">
-            <template slot-scope="scope">
-                <span>{{scope.row.upType==1?"加":"减"}}</span>
-            </template>
+            <el-table-column prop="updatedate"  label="付款时间" show-overflow-tooltip header-align="center" align="center"/>
+             <el-table-column fixed="right" label="操作">
+                <template slot-scope="scope">
+                    <el-button type="text"  size="mini">重发</el-button>
+                </template>
             </el-table-column>
         </el-table>
         <!--工具条-->
@@ -81,10 +104,9 @@ export default {
   data() {
     return {
       SeachForm:{//表单
-          optuser:"",
-          opttype:"",
           orderNo:"",
-          userType:"",
+          shopid:"",
+          status:true,
           startcreatedate:"",
           endcreatedate:"",
           pageIndex:1,
@@ -110,7 +132,7 @@ export default {
       var that = this
       that.tableLoading =true
       that.Httpclient({
-          url:'/api/capitallog/selectAll?'+that.changAJaxparm(),
+          url:'/api/orderdetelis/selectAll?'+that.changAJaxparm(),
           data:{},
           method: "get"
       }).then(res => {
