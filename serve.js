@@ -4,7 +4,7 @@ const path = require('path')
 const axios = require('axios')
 
 const instance = axios.create({
-  baseURL: 'http://211.233.81.229:8099/'
+  baseURL: 'http://91.204.225.42:8099/'
 })
 
 app.use(express.json())

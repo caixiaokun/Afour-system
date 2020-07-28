@@ -3,7 +3,7 @@ const colors = require('colors/safe')
 const fs = require('fs')
 
 const config = {
-  host: '211.233.81.229',
+  host: '91.204.225.42',
   port: 22,
   username: 'root',
   password: 'ogmkLQNX8125'
