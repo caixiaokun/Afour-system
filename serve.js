@@ -9,7 +9,7 @@ const instance = axios.create({
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })) 
-app.use(express.static(path.resolve(__dirname, './dist')))
+app.use(express.static(path.resolve(__dirname, './ROOT')))
 
 app.get('/api/*', (req, res) => {
   instance.get(req.path, {
@@ -34,7 +34,7 @@ app.post('/api/*', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './dist/index.html'))
+  res.sendFile(path.resolve(__dirname, './ROOT/index.html'))
 })
 
 app.listen(8089, () => {
