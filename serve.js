@@ -32,6 +32,26 @@ app.post('/api/*', (req, res) => {
     res.json(response.data)
   })
 })
+app.delete('/api/*', (req, res) => {
+  instance.get(req.path, {
+    params: req.query,
+    headers: {
+      usertoken: req.headers.usertoken
+    }
+  }).then(response => {
+    res.json(response.data)
+  })
+})
+app.put('/api/*', (req, res) => {
+  instance.get(req.path, {
+    params: req.query,
+    headers: {
+      usertoken: req.headers.usertoken
+    }
+  }).then(response => {
+    res.json(response.data)
+  })
+})
 
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, './ROOT/index.html'))
