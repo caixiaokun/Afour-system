@@ -23,7 +23,7 @@ app.get('/api/*', (req, res) => {
 })
 
 app.post('/api/*', (req, res) => {
-  instance.post(req.path, {}, {
+  instance.post(req.path, req.body, {
     params: req.query,
     headers: {
       usertoken: req.headers.usertoken
