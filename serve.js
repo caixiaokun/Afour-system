@@ -33,7 +33,7 @@ app.post('/api/*', (req, res) => {
   })
 })
 app.delete('/api/*', (req, res) => {
-  instance.get(req.path, {
+  instance.delete(req.path, {
     params: req.query,
     headers: {
       usertoken: req.headers.usertoken
@@ -43,7 +43,7 @@ app.delete('/api/*', (req, res) => {
   })
 })
 app.put('/api/*', (req, res) => {
-  instance.get(req.path, {
+  instance.put(req.path, {
     params: req.query,
     headers: {
       usertoken: req.headers.usertoken
