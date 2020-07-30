@@ -1,60 +1,52 @@
 const express = require('express')
 const app = express()
 const path = require('path')
-const axios = require('axios')
+const http = require('http')
 
-const instance = axios.create({
-  baseURL: 'http://91.204.225.42:8099/'
-})
+app.use(express.static(path.resolve(__dirname, './dist')))
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true })) 
-app.use(express.static(path.resolve(__dirname, './ROOT')))
+app.all('/api/*', (req, res) => {
+  new Promise((resolve, reject) => {
+    const options = {
+      hostname: '91.204.225.42',
+      port: 8099,
+      path: req.url,
+      method: req.method,
+      headers: {
+        userToken: req.headers.usertoken,
+        'Content-Type': req.headers['content-type']
+      }
+    }
+    if (req.headers['content-length']) {
+      options.headers['Content-Length'] = req.headers['content-length']
+    }
+    const request = http.request(options, (response) => {
+      response.setEncoding('utf8')
+      let str = ''
+      response.on('data', (chunk) => {
+        str += chunk
+      })
+      response.on('end', () => {
+        resolve(str)
+      })
+    })
+    request.on('error', (e) => {
+      reject(e.message)
+    })
 
-app.get('/api/*', (req, res) => {
-  instance.get(req.path, {
-    params: req.query,
-    headers: {
-      usertoken: req.headers.usertoken
-    }
-  }).then(response => {
-    res.json(response.data)
-  })
-})
-
-app.post('/api/*', (req, res) => {
-  instance.post(req.path, req.body, {
-    params: req.query,
-    headers: {
-      usertoken: req.headers.usertoken
-    }
-  }).then(response => {
-    res.json(response.data)
-  })
-})
-app.delete('/api/*', (req, res) => {
-  instance.delete(req.path, req.body,{
-    params: req.query,
-    headers: {
-      usertoken: req.headers.usertoken
-    }
-  }).then(response => {
-    res.json(response.data)
-  })
-})
-app.put('/api/*', (req, res) => {
-  instance.put(req.path, {
-    params: req.query,
-    headers: {
-      usertoken: req.headers.usertoken
-    }
-  }).then(response => {
-    res.json(response.data)
+    req.on('data', (chunk) => {
+      request.write(chunk)
+    })
+    req.on('end', () => {
+      request.end()
+    })
+  }).then(data => {
+    res.send(data)
   })
 })
 
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './ROOT/index.html'))
+  res.sendFile(path.resolve(__dirname, './dist/index.html'))
 })
 
 app.listen(8089, () => {
