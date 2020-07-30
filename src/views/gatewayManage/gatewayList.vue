@@ -2,7 +2,7 @@
   <div>
     <!-- 按钮区 -->
     <el-row class='operate-btns mt20'>
-      <el-button size="small" type="success"  icon="el-icon-plus">新增</el-button>
+      <!-- <el-button size="small" type="success"  icon="el-icon-plus">新增</el-button> -->
     </el-row>
     <!-- 表格 -->
     <el-row class="mt20">
@@ -10,21 +10,26 @@
             :data="dataList" border tooltip-effect="dark" style="width: 100%"
             v-loading="tableLoading" element-loading-text="拼命加载中">
             <el-table-column type="index" fixed label="序号" width="50" header-align="center" align="center"/>
-            <el-table-column prop="orderNo"  label="账户编号" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="orderNo"  label="密钥" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="orderNo"  label="码商名称" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="orderNo"  label="通道名称" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="orderNo"  label="姓名" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="orderNo"  label="开启状态" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="orderNo"  label="是否在线" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="orderNo"  label="审核" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="orderNo"  label="是否禁用" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="orderNo"  label="买家卖家" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="createdate"  label="单笔收款上限" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="orderNo"  label="单笔最低收款" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="orderNo"  label="当天收款上限" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="orderNo"  label="汇率" show-overflow-tooltip header-align="center" align="center"/>
-             <el-table-column fixed="right" label="操作">
+            <el-table-column prop="appprivatekey"  label="应用私钥" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="alipaypublickey"  label="阿里公钥" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="getwayname" label="通道名称" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="alipayname"  label="姓名" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="alipayaccount"  label="账户" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="status"  label="通道状态" show-overflow-tooltip header-align="center" align="center">
+                <template slot-scope="scope">
+                    <span>{{scope.row.status?"开启":"关闭"}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="notifyurl"  label="支付宝回调地址" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="systemurl"  label="通道的url首页地址" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="mdfivekey" label="通道加密" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="signtype" label="解密格式" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="serverurl" label="请求阿里支付的路径" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="object"  label="科目类别" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="updatedate"  label="修改日期" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="createdate"  label="创建日期" show-overflow-tooltip header-align="center" align="center"/>
+
+             <el-table-column fixed="right" label="操作" header-align="center" align="center">
                 <template slot-scope="scope">
                     <el-button type="text"  size="mini">测试</el-button>
                 </template>
@@ -52,8 +57,7 @@ export default {
   data() {
     return {
       SeachForm:{//表单
-         
-          status:true,
+          status:false,
           pageIndex:1,
           pageSize:10,
       },

@@ -33,7 +33,7 @@ app.post('/api/*', (req, res) => {
   })
 })
 app.delete('/api/*', (req, res) => {
-  instance.delete(req.path, {
+  instance.delete(req.path, req.body,{
     params: req.query,
     headers: {
       usertoken: req.headers.usertoken
@@ -58,5 +58,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(8089, () => {
-  console.log('\x1B[32m%s\x1B[39m', 'app listening on port 8089!')
+  console.log('\x1B[32mnp%s\x1B[39m', 'app listening on port 8089!')
 })

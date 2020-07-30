@@ -33,7 +33,7 @@
     </el-row>
     <!-- 按钮区 -->
     <el-row class='operate-btns mt20'>
-      <el-button size="small" type="success"  icon="el-icon-download">导出</el-button>
+      <!-- <el-button size="small" type="success"  icon="el-icon-download">导出</el-button> -->
     </el-row>
     <!-- 表格 -->
     <el-row class="mt20">
@@ -41,11 +41,12 @@
             :data="dataList" border tooltip-effect="dark" style="width: 100%"
             v-loading="tableLoading" element-loading-text="拼命加载中">
             <el-table-column type="index" fixed label="序号" width="50" header-align="center" align="center"/>
-            <el-table-column prop="bank" fixed label="所属银行" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="card" fixed label="卡号" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="name" fixed label="姓名" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="addpeople" fixed label="添加人" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="accounttype" fixed label="账号类型" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="optuser" fixed label="操作员" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="opttype" fixed label="操作类型" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="depart" fixed label="部门名称" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="ip" fixed label="主机" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="optplace" fixed label="操作地点" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="createdate" fixed label="操作时间" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column fixed="right" label="操作">
                 <template slot-scope="scope">
                     <el-button type="text"  size="mini" @click="detailShow(scope.row)">详情</el-button>
@@ -67,15 +68,16 @@
 
     </el-row>
     <el-dialog title="详情" :visible.sync="detaildialogVisible"
-      width="30%">
-      <p> <span> 操作时间:{{detailobj.createdate}}</span></p>
-      <p> <span> ip:{{detailobj.ip}}</span></p>
-      <p> <span> 操作模块:{{detailobj.modular}}</span></p>
-      <p> <span> 操作地址:{{detailobj.optplace}}</span></p>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="detaildialogVisible = false">确 定</el-button>
-      </span>
-</el-dialog>
+        width="30%">
+        <p> <span> 操作时间:{{detailobj.createdate}}</span></p>
+        <p> <span> ip:{{detailobj.ip}}</span></p>
+        <p> <span> 操作模块:{{detailobj.modular}}</span></p>
+        <p> <span> 操作类型:{{detailobj.opttype}}</span></p>
+        <p> <span> 操作地址:{{detailobj.optplace}}</span></p>
+        <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="detaildialogVisible = false">确 定</el-button>
+        </span>
+    </el-dialog>
 </div>
 </template>
 
@@ -98,12 +100,18 @@ export default {
         {label:"登录",value:"3"},
         {label:"登出",value:"4"},
       ],
+      
       detailobj:{},
       total:0,
       dataList:[],
       tableLoading:false,
       detaildialogVisible:false
     };
+  },
+  filters:{
+      opttype(val){
+          return this.opttypeList.map(val=>obj.value)
+      }
   },
   mounted(){
     this.search()
@@ -113,7 +121,7 @@ export default {
       var that = this
       that.tableLoading =true
       that.Httpclient({
-          url:'/api/bank/selectAll?'+that.changAJaxparm(),
+          url:'/api/operationlog/selectAll?'+that.changAJaxparm(),
           data:{},
           method: "get"
       }).then(res => {

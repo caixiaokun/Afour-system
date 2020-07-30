@@ -25,7 +25,7 @@
     </el-row>
     <!-- 按钮区 -->
     <el-row class='operate-btns mt20'>
-      <el-button size="small" type="success"  icon="el-icon-plus">新增</el-button>
+      <el-button size="small" type="success" @click="Opendialog" icon="el-icon-plus" >新增</el-button>
     </el-row>
     <!-- 表格 -->
     <el-row class="mt20">
@@ -60,21 +60,21 @@
 
     </el-row>
     <el-dialog :title="dialogFormTitle" :visible.sync="dialogFormCard">
-        <el-form :model=" CardForm" label-width="85px" >
-            <el-form-item label="所属银行:">
+        <el-form :model=" CardForm" label-width="120px" >
+            <el-form-item label="用户类型:">
                 <el-input v-model=" CardForm.accounttype" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="所属银行:">
-                <el-input v-model=" CardForm.accounttype" autocomplete="off"></el-input>
+            <el-form-item label="申请添加人:">
+                <el-input v-model=" CardForm.addpeople" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="所属银行:">
-                <el-input v-model=" CardForm.accounttype" autocomplete="off"></el-input>
+                <el-input v-model=" CardForm.bank" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="所属银行:">
-                <el-input v-model=" CardForm.accounttype" autocomplete="off"></el-input>
+           <el-form-item label="银行卡号:">
+                <el-input v-model=" CardForm.card" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="所属银行:">
-                <el-input v-model=" CardForm.accounttype" autocomplete="off"></el-input>
+            <el-form-item label="银行卡持有人:">
+                <el-input v-model=" CardForm.name" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button @click="dialogFormCard = false">取 消</el-button>
@@ -99,12 +99,12 @@ export default {
       dialogFormCard:false,
       dialogFormTitle:"添加银行卡",
       CardForm:{
-         accounttype: "",
-          addpeople: "",
-          bank: "",
-          card: "",
-          id: "",
-          name: "",
+        accounttype: "",
+        addpeople: "",
+        bank: "",
+        card: "",
+        id: "",
+        name: "",
       },
       total:0,
       dataList:[],
@@ -141,12 +141,9 @@ export default {
     },
     conforim(){
         var that = this
-        let ajaxObj = that.UserForm
-            ajaxObj.organid = that.UserForm.organid[that.UserForm.organid.length-1]
-            ajaxObj.superior =""
-        
+        let ajaxObj = that.CardForm
         that.Httpclient({
-            url:'/api/user/saveOrUpdate',
+            url:'/api/bank/saveOrUpdate',
             data:ajaxObj,
             method: "POST"
         }).then(res => {
@@ -157,23 +154,31 @@ export default {
             }
         })
     },
+    Opendialog(){
+        this.dialogFormTitle = "添加银行卡"
+        this.CardForm={
+            accounttype: "",
+            addpeople: "",
+            bank: "",
+            card: "",
+            id: "",
+            name: "",
+        }
+        this.dialogFormCard = true
+
+    },
     // 编辑银行卡
     EditCard(row){
         var that = this
-        that.dialogFormTitle = "编辑用户"
+        that.dialogFormTitle = "编辑银行卡"
         that. CardForm={
-            email: row.email,
-            id: row.id,
-            identity: row.identity,
-            organid: that.findAncestry(that.OrganizationTree,row.organid),
-            password: row.password,
-            phone: row.phone,
-            remarks: row.remarks,
-            sex: row.sex,
-            status: row.status,
-            superior: row.superior,
-            username: row.username
-        }
+          accounttype:row.accounttype,
+          addpeople: row.addpeople,
+          bank: row.bank,
+          card: row.card,
+          id: row.id,
+          name: row.name,
+          }
         that.dialogFormCard = true
 
     },

@@ -51,6 +51,7 @@
             <el-table-column prop="optType"  label="操作类型" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column prop="userId"  label="用户id" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column prop="userType"  label="用户类型" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="chUpPlace"  label="变动金额" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column prop="updatePlace"  label="变动后金额" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column prop="createdate"  label="创建时间" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column prop="upType"  label="加减" show-overflow-tooltip header-align="center" align="center">
