@@ -42,7 +42,7 @@
             v-loading="tableLoading" element-loading-text="拼命加载中">
             <el-table-column type="index" fixed label="序号" width="50" header-align="center" align="center"/>
             <el-table-column prop="optuser" fixed label="操作员" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="opttype" fixed label="操作类型" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="opttype" fixed label="操作类型" show-overflow-tooltip :formatter="opttypeName" header-align="center" align="center"/>
             <el-table-column prop="depart" fixed label="部门名称" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column prop="ip" fixed label="主机" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column prop="optplace" fixed label="操作地点" show-overflow-tooltip header-align="center" align="center"/>
@@ -72,7 +72,7 @@
         <p> <span> 操作时间:{{detailobj.createdate}}</span></p>
         <p> <span> ip:{{detailobj.ip}}</span></p>
         <p> <span> 操作模块:{{detailobj.modular}}</span></p>
-        <p> <span> 操作类型:{{detailobj.opttype}}</span></p>
+        <p> <span> 操作类型:{{detailobj.opttype|opttypefiltersName}}</span></p>
         <p> <span> 操作地址:{{detailobj.optplace}}</span></p>
         <span slot="footer" class="dialog-footer">
             <el-button type="primary" @click="detaildialogVisible = false">确 定</el-button>
@@ -109,14 +109,22 @@ export default {
     };
   },
   filters:{
-      opttype(val){
-          return this.opttypeList.map(val=>obj.value)
-      }
+       opttypefiltersName(val){
+        if(val==0){return "增加"}
+        else if(val==1){return "删除"}
+        else if(val==2){return "修改"}
+        else if(val==3){return "登录"}
+        else if(val==4){return "登出"}
+    },
   },
   mounted(){
     this.search()
   },
   methods: {
+    opttypeName(val){
+        let scorefilter = this.opttypeList.filter(item=>item.value==val.opttype)
+        return scorefilter[0].label
+    },
     search(){
       var that = this
       that.tableLoading =true

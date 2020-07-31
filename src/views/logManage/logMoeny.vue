@@ -38,7 +38,7 @@
     </el-row>
     <!-- 按钮区 -->
     <el-row class='operate-btns mt20'>
-      <el-button size="small" type="success"  icon="el-icon-plus">新增</el-button>
+      <!-- <el-button size="small" type="success"  icon="el-icon-plus">新增</el-button> -->
     </el-row>
     <!-- 表格 -->
     <el-row class="mt20">
@@ -48,7 +48,7 @@
             <el-table-column type="index" fixed label="序号" width="50" header-align="center" align="center"/>
             <el-table-column prop="optUser"  label="操作人" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column prop="orderNo"  label="订单号" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="optType"  label="操作类型" show-overflow-tooltip header-align="center" align="center"/>
+            <el-table-column prop="optType"  label="操作类型" show-overflow-tooltip  :formatter="opttypeName" header-align="center" align="center"/>
             <el-table-column prop="userId"  label="用户id" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column prop="userType"  label="用户类型" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column prop="chUpPlace"  label="变动金额" show-overflow-tooltip header-align="center" align="center"/>
@@ -98,6 +98,13 @@ export default {
         {label:"通道接口方",value:"3"},
         {label:"开发员",value:"4"},
       ],
+       opttypeList:[ 
+        {label:"增加",value:"0"},
+        {label:"删除",value:"1"},
+        {label:"修改 ",value:"2"},
+        {label:"登录",value:"3"},
+        {label:"登出",value:"4"},
+      ],
       total:0,
       dataList:[],
       tableLoading:false
@@ -107,6 +114,10 @@ export default {
     this.search()
   },
   methods: {
+    opttypeName(val){
+        let scorefilter = this.opttypeList.filter(item=>item.value==val.optType)
+        return scorefilter[0].label
+    },
     search(){
       var that = this
       that.tableLoading =true
