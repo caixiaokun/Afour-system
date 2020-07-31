@@ -31,7 +31,7 @@
 
              <el-table-column fixed="right" label="操作" header-align="center" align="center">
                 <template slot-scope="scope">
-                    <el-button type="text"  size="mini">测试</el-button>
+                    <el-button type="text"  size="mini">修改</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -57,7 +57,7 @@ export default {
   data() {
     return {
       SeachForm:{//表单
-          status:false,
+          status:"",
           pageIndex:1,
           pageSize:10,
       },

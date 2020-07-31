@@ -65,9 +65,7 @@
     </el-row>
     <!-- 按钮区 -->
     <el-row class="operate-btns mt20">
-      <el-button size="small" type="danger" icon="el-icon-setting"
-        >绑定码商</el-button
-      >
+      <!-- <el-button size="small" type="danger" icon="el-icon-setting" >绑定码商</el-button > -->
     </el-row>
     <!-- 表格 -->
     <el-row class="mt20">
