@@ -118,7 +118,8 @@ export const constantRoutes = [{
       title: '商家管理',
       icon: 'eye-open'
     },
-    children: [{
+    children: [
+      {
         path: 'list',
         name: 'list',
         component: () => import('@/views/mcaManage/list'),

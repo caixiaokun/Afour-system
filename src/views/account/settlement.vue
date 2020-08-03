@@ -98,7 +98,7 @@
             <el-table-column prop="remarks"  label="备注" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column prop=""  label="操作" show-overflow-tooltip header-align="center" align="center">
              <template slot-scope="scope">
-                 <el-button type="text" size="mini">下发备注</el-button>
+                 <el-button type="text" size="mini" @click="goRemark(scope.row)">下发备注</el-button>
             </template>
             </el-table-column>
         </el-table>
@@ -174,12 +174,25 @@ export default {
         }
         return ss.slice(0,ss.length-1)
     },
+    // 下发备注
+    goRemark(row){
+      var that = this
+      that.Httpclient({
+          url:'/api/capital/remarks',
+          data:{id:row.id,remarks:row.remarks},
+          method: "POST"
+      }).then(res => {
+          if(res.code==0){
+              this.$message({ message: '操作成功',type: 'success'})
+              this.search()
+          }
+      })
+    },
     conforim(){
         var that = this
         let ajaxObj = that.UserForm
             ajaxObj.organid = that.UserForm.organid[that.UserForm.organid.length-1]
             ajaxObj.superior =""
-        
         that.Httpclient({
             url:'/api/user/saveOrUpdate',
             data:ajaxObj,
