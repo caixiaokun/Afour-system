@@ -8,7 +8,7 @@ app.use(express.static(path.resolve(__dirname, './dist')))
 app.all('/api/*', (req, res) => {
   new Promise((resolve, reject) => {
     const options = {
-      hostname: '103.13.222.115',
+      hostname: '103.13.222.132',
       port: 8099,
       path: req.url,
       method: req.method,

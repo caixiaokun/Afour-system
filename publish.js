@@ -3,7 +3,7 @@ const colors = require('colors/safe')
 const fs = require('fs')
 
 const config = {
-  host: '103.13.222.115',
+  host: '103.13.222.132',
   port: 22,
   username: 'root',
   password: '58a48ocgxg'
@@ -30,5 +30,5 @@ function upload(path, remoteDir) {
     .upload()
 }
 
-upload('./serve.js', '/usr/local/tomcat/webapps2')
-// upload('./dist', '/usr/local/tomcat/webapps2/ROOT')
+// upload('./serve.js', '/usr/local/tomcat/webapps2')
+upload('./dist', '/usr/local/tomcat/webapps2/ROOT')
