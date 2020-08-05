@@ -3,10 +3,10 @@ const colors = require('colors/safe')
 const fs = require('fs')
 
 const config = {
-  host: '91.204.225.42',
+  host: '103.13.222.115',
   port: 22,
   username: 'root',
-  password: 'ogmkLQNX8125'
+  password: '58a48ocgxg'
 }
 
 function upload(path, remoteDir) {
