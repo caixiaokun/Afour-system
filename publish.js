@@ -30,5 +30,5 @@ function upload(path, remoteDir) {
     .upload()
 }
 
-// upload('./serve.js', '/usr/local/tomcat/webapps2')
-upload('./dist', '/usr/local/tomcat/webapps2/ROOT')
+// upload('./serve.js', '/usr/local/tomcat/tomcat8/webapps2')
+upload('./dist', '/usr/local/tomcat/tomcat8/webapps2')
