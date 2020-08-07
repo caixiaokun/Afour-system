@@ -35,18 +35,6 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="码商类型">
-              <el-select v-model="SeachForm.optType" clearable>
-                <el-option
-                  v-for="(item, index) in status"
-                  :key="index"
-                  :label="item.dictName"
-                  :value="item.dictId"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
             <el-form-item class="opeattionClass">
               <el-button
                 size="small"
@@ -65,24 +53,36 @@
     </el-row>
     <!-- 按钮区 -->
     <el-row class="operate-btns mt20">
-      <!-- <el-button size="small" type="danger" icon="el-icon-setting" >绑定码商</el-button > -->
+      <el-button size="small" type="success" icon="el-icon-plus" @click="Opendialog">新增</el-button >
     </el-row>
     <!-- 表格 -->
     <el-row class="mt20">
-      <el-table max-height="480" ref="multipleTable" row-key="id" :data="dataList"
+      <el-table max-height="680" ref="multipleTable" row-key="id" :data="dataList"
         border tooltip-effect="dark"  style="width: 100%"
         v-loading="tableLoading" element-loading-text="拼命加载中" >
         <el-table-column type="index"  fixed label="用户id" width="50" header-align="center" align="center" />
-        <el-table-column  prop="templateCode" label="登录账号"  show-overflow-tooltip />
-        <el-table-column prop="shopname" label="用户名称" show-overflow-tooltip/>
-        <el-table-column prop="templateCode" label="账户类型" show-overflow-tooltip/>
-        <el-table-column prop="templateCode" label="上级编号" show-overflow-tooltip />
-        <el-table-column  prop="status" label="状态" show-overflow-tooltip />
-        <el-table-column prop="mdfivekey" label="秘钥" show-overflow-tooltip />
-        <el-table-column prop="templateCode" label="余额" show-overflow-tooltip />
-        <el-table-column prop="templateCode" label="冻结金额" show-overflow-tooltip />
-        <el-table-column prop="createdate" label="创建时间" show-overflow-tooltip />
-        <el-table-column  prop="templateCode" label="操作"  show-overflow-tooltip/>
+        <el-table-column  prop="templateCode" label="登录账号" header-align="center" align="center" show-overflow-tooltip />
+        <el-table-column prop="shopname" label="用户名称" header-align="center" align="center" show-overflow-tooltip/>
+        <el-table-column prop="templateCode" label="账户类型" header-align="center" align="center" show-overflow-tooltip/>
+        <!-- <el-table-column prop="templateCode" label="上级编号" header-align="center" align="center" show-overflow-tooltip /> -->
+         <el-table-column prop="gatewayid" label="通道id" header-align="center" align="center" show-overflow-tooltip />
+        <el-table-column  prop="status" label="状态" header-align="center" align="center" show-overflow-tooltip>
+          <template slot-scope="scope">
+              <span v-if="scope.row.status==1" style="color:green;" >正常</span>
+              <span v-else style="color:red;">失效</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="mdfivekey" label="秘钥" show-overflow-tooltip header-align="center" align="center"/>
+        <!-- <el-table-column prop="templateCode" label="余额" show-overflow-tooltip header-align="center" align="center"/> -->
+        <!-- <el-table-column prop="templateCode" label="冻结金额" show-overflow-tooltip header-align="center" align="center"/> -->
+        <el-table-column prop="createdate" label="创建时间" show-overflow-tooltip header-align="center" align="center"/>
+        <el-table-column  prop="templateCode" label="操作" min-width='150'  show-overflow-tooltip header-align="center" align="center">
+          <template slot-scope="scope"  >
+            <el-button type="text" size="mini" style="color:green;" >编辑</el-button>
+            <el-button type="text"  size="mini">修改</el-button>
+            <el-button type="text" @click="OpendRateialog(scope.row)" style="color:skyblue;" size="mini">修改费率</el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <!--工具条-->
       <el-col :span="24" class="toolbar col-pagination">
@@ -97,6 +97,42 @@
         ></el-pagination>
       </el-col>
     </el-row>
+    <el-dialog :title="dialogFormTitle" :visible.sync="dialogFormShop">
+        <el-form :model="ShopForm" label-width="85px" >
+            <el-form-item label="店铺名称:">
+                <el-input v-model="ShopForm.shopname" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="通道id:" >
+                <el-input v-model="ShopForm.gatewayid" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="秘钥:" >
+                <el-input v-model="ShopForm.mdfivekey" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="状态:">
+                <el-radio-group v-model="ShopForm.status">
+                    <el-radio label="0">失效</el-radio>
+                    <el-radio label="1">正常</el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item>
+                <el-button @click="dialogFormShop = false">取 消</el-button>
+                <el-button type="primary" @click="conforim">确 定</el-button>
+            </el-form-item>
+        </el-form>
+    </el-dialog>
+    <el-dialog title="修改费率" :visible.sync="dialogFormRate">
+      <el-form label-width="115px" class="upadteClass">
+       <div v-for="(obj,kk) in RateObj" :key="kk" >
+        <el-form-item :label='obj.getwayname+": "' >
+           <el-input v-model="obj.exchangeRate" autocomplete="off"></el-input>
+        </el-form-item>
+       </div>
+        <el-form-item>
+            <el-button @click="dialogFormRate = false">取 消</el-button>
+            <el-button type="primary" @click="Rateconforim">确 定</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -112,10 +148,23 @@ export default {
         pageIndex: 1,
         pageSize: 10
       },
+      dialogFormTitle:"",
       status: [],
       total: 0,
       dataList: [],
-      tableLoading: false
+      tableLoading: false,
+      dialogFormShop:false,
+      dialogFormRate:false,
+      ShopForm:{
+        createdate: "",
+        gatewayid: "",
+        id: "",
+        mdfivekey: "",
+        shopname: "",
+        status: "",
+        updatedate: ""
+      },
+      RateObj:{}
     };
   },
   mounted() {
@@ -131,6 +180,61 @@ export default {
     handleCurrentPageChange(val) {
       this.SeachForm.pageNum = val;
       this.search(1);
+    },
+    Opendialog(){
+       this.dialogFormTitle = "添加商户"
+        this.UserForm={
+          createdate: "",
+          gatewayid: "",
+          id: "",
+          mdfivekey: "",
+          shopname: "",
+          status: "",
+          updatedate: ""
+        }
+        this.dialogFormShop = true
+    },
+    OpendRateialog(row){
+      var that = this
+      that.Httpclient({
+            url:'/api/shop/findExchangeRate?shopId='+row.id,
+            data:{},
+            method: "get"
+        }).then(res => {
+            if(res.code==0){
+              that.RateObj = res.data
+              that.dialogFormRate = true
+            }
+        })
+    },
+    conforim(){
+        var that = this
+        that.Httpclient({
+            url:'/api/shop/saveOrUpdate',
+            data:{shop:that.ShopForm},
+            method: "POST"
+        }).then(res => {
+            if(res.code==0){
+                that.dialogFormShop = false
+                this.$message({ message: '操作成功',type: 'success'})
+                this.search()
+            }
+        })
+    },
+    Rateconforim(){
+      var that = this
+      let　ajaxObj = that.RateObj
+      that.Httpclient({
+          url:'/api/shop/updateExchangeRate',
+          data:{jsonObject:JSON.stringify(ajaxObj)},
+          method: "POST"
+      }).then(res => {
+          if(res.code==0){
+              that.dialogFormShop = false
+              this.$message({ message: '操作成功',type: 'success'})
+              this.search()
+          }
+      })
     },
     // 查询
     search() {
@@ -163,4 +267,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@/styles/public.scss";
+.upadteClass{
+  min-height:200px;
+}
 </style>
