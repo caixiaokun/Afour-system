@@ -226,12 +226,12 @@ export default {
       let　ajaxObj = that.RateObj
       that.Httpclient({
           url:'/api/shop/updateExchangeRate',
-          data:{jsonObject:JSON.stringify(ajaxObj)},
+          data:ajaxObj,
           method: "POST"
       }).then(res => {
           if(res.code==0){
-              that.dialogFormShop = false
               this.$message({ message: '操作成功',type: 'success'})
+              that.dialogFormRate = false
               this.search()
           }
       })
