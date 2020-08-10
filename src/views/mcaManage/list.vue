@@ -211,7 +211,7 @@ export default {
         var that = this
         that.Httpclient({
             url:'/api/shop/saveOrUpdate',
-            data:{shop:that.ShopForm},
+            data:that.ShopForm,
             method: "POST"
         }).then(res => {
             if(res.code==0){
