@@ -158,7 +158,7 @@ export default {
       ShopForm:{
         createdate: "",
         gatewayid: "",
-        id: "",
+        id: null,
         mdfivekey: "",
         shopname: "",
         status: "",
@@ -186,7 +186,7 @@ export default {
         this.UserForm={
           createdate: "",
           gatewayid: "",
-          id: "",
+          id: null,
           mdfivekey: "",
           shopname: "",
           status: "",
