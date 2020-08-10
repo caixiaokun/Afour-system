@@ -15,9 +15,14 @@
             <el-table-column prop="getwayname" label="通道名称" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column prop="alipayname"  label="姓名" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column prop="alipayaccount"  label="账户" show-overflow-tooltip header-align="center" align="center"/>
-            <el-table-column prop="status"  label="通道状态" show-overflow-tooltip header-align="center" align="center">
+            <el-table-column prop="status"  label="通道状态" show-overflow-tooltip 
+                header-align="center" align="center" min-width="100">
                 <template slot-scope="scope">
                     <span>{{scope.row.status?"开启":"关闭"}}</span>
+                    <el-switch v-model="scope.row.status" 
+                        active-color="#13ce66" @change="statusOpeat()"
+                        inactive-color="#ff4949">
+                    </el-switch>
                 </template>
             </el-table-column>
             <el-table-column prop="notifyurl"  label="支付宝回调地址" show-overflow-tooltip header-align="center" align="center"/>
@@ -100,6 +105,22 @@ export default {
             }
         }
         return ss.slice(0,ss.length-1)
+    },
+    statusOpeat(row){
+        console.log(row)
+        var that = this
+        that.Httpclient({
+            url:'/api/gateway/isSwitch?status='+row.status+'&id='+row.id,
+            data:{},
+            method: "get"
+        }).then(res => {
+            if(res.code==0){
+                that.$message({ message: row.status?"开启成功":"关闭成功",type: 'success'})
+            }else{
+                row.status = row.status?false:true
+            }
+        })
+
     },
     conforim(){
         var that = this

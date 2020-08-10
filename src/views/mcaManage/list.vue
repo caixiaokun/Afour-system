@@ -76,10 +76,11 @@
         <!-- <el-table-column prop="templateCode" label="余额" show-overflow-tooltip header-align="center" align="center"/> -->
         <!-- <el-table-column prop="templateCode" label="冻结金额" show-overflow-tooltip header-align="center" align="center"/> -->
         <el-table-column prop="createdate" label="创建时间" show-overflow-tooltip header-align="center" align="center"/>
-        <el-table-column  prop="templateCode" label="操作" min-width='150'  show-overflow-tooltip header-align="center" align="center">
+        <el-table-column  prop="templateCode" label="操作" min-width='200'  
+            show-overflow-tooltip header-align="center" align="center">
           <template slot-scope="scope"  >
-            <el-button type="text" size="mini" style="color:green;" >编辑</el-button>
-            <el-button type="text"  size="mini">修改</el-button>
+            <el-button type="text" size="mini" style="color:green;" @click="EditShop(scope.row)" >编辑</el-button>
+            <el-button type="text"  size="mini" @click="bindCodeId(scope.row)">绑定码商id</el-button>
             <el-button type="text" @click="OpendRateialog(scope.row)" style="color:skyblue;" size="mini">修改费率</el-button>
           </template>
         </el-table-column>
@@ -120,11 +121,12 @@
             </el-form-item>
         </el-form>
     </el-dialog>
+    <!-- 修改费率 -->
     <el-dialog title="修改费率" :visible.sync="dialogFormRate">
       <el-form label-width="115px" class="upadteClass">
        <div v-for="(obj,kk) in RateObj" :key="kk" >
         <el-form-item :label='obj.getwayname+": "' >
-           <el-input v-model="obj.exchangeRate" autocomplete="off"></el-input>
+           <el-input v-model="obj.exchangeRate" type="number" autocomplete="off"></el-input>
         </el-form-item>
        </div>
         <el-form-item>
@@ -183,7 +185,7 @@ export default {
     },
     Opendialog(){
        this.dialogFormTitle = "添加商户"
-        this.UserForm={
+        this.ShopForm={
           createdate: "",
           gatewayid: "",
           id: null,
@@ -205,7 +207,44 @@ export default {
               that.RateObj = res.data
               that.dialogFormRate = true
             }
-        })
+      })
+    },
+    EditShop(row){
+      var that = this
+      that.dialogFormTitle = "编辑商户"
+      this.ShopForm = {
+        createdate: row.createdate,
+        gatewayid: row.gatewayid,
+        id: row.id,
+        mdfivekey: row.mdfivekey,
+        shopname: row.shopname,
+        status: row.status,
+        updatedate: row.updatedate
+      }
+      that.dialogFormShop = true
+    },
+    bindCodeId(row){
+      this.$confirm('确定绑定此码商Id吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+           this.Httpclient({
+            url:'/api/shop/updateUserId?userId='+row.userId+'&id='+row.id,
+            data:{},
+            method: "post"
+            }).then(res => {
+                if(res.code==0){
+                    this.$message({ message: '绑定成功',type: 'success'})
+                    this.search()
+                }
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消操作'
+          });          
+        });
     },
     conforim(){
         var that = this

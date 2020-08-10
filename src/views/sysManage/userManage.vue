@@ -71,7 +71,7 @@
                 <template slot-scope="scope" >
                     <el-button type="text"  size="mini" style="color:green;" @click="EditUser(scope.row)">编辑</el-button>
                     <el-button type="text" size="mini"><span style="color:red;" @click="DelUser(scope.row)">删除</span></el-button>
-                    <el-button type="text" size="mini">重置</el-button>
+                    <el-button type="text" size="mini" @click="OpendRateialog(scope.row)">修改汇率</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -137,6 +137,20 @@
         </el-form>
        
     </el-dialog>
+    <!-- 修改费率 -->
+    <el-dialog title="修改汇率" :visible.sync="dialogFormRate">
+      <el-form label-width="115px" class="upadteClass">
+       <div v-for="(obj,kk) in RateObj" :key="kk" >
+        <el-form-item :label='obj.getwayname+": "' >
+           <el-input v-model="obj.exchangeRate" type="number" autocomplete="off"></el-input>
+        </el-form-item>
+       </div>
+        <el-form-item>
+            <el-button @click="dialogFormRate = false">取 消</el-button>
+            <el-button type="primary" @click="Rateconforim">确 定</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
 </div>
 </template>
 
@@ -186,7 +200,9 @@ export default {
         OrganizationTree:[],
         dataList:[],
         tableLoading:false,
-        multipleData:[]
+        multipleData:[],
+        dialogFormRate:false,
+        RateObj:{},
         
     };
   },
@@ -212,6 +228,34 @@ export default {
     },
     handleSelectionChange(val){
         this.multipleData = val
+    },
+    OpendRateialog(row){
+        var that = this
+        that.Httpclient({
+                url:'/api/user/findExchangeRate?userId='+row.id,
+                data:{},
+                method: "get"
+            }).then(res => {
+                if(res.code==0){
+                that.RateObj = res.data
+                that.dialogFormRate = true
+                }
+        })
+    },
+    Rateconforim(){
+      var that = this
+      let　ajaxObj = that.RateObj
+      that.Httpclient({
+          url:'/api/user/updateExchangeRate',
+          data:ajaxObj,
+          method: "POST"
+      }).then(res => {
+          if(res.code==0){
+              this.$message({ message: '操作成功',type: 'success'})
+              that.dialogFormRate = false
+              this.search()
+          }
+      })
     },
     // 获取机构数据
     getOrganizationTree(){

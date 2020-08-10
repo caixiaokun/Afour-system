@@ -99,14 +99,6 @@ export const constantRoutes = [{
         meta: {
           title: '结算列表',
         }
-      },
-      {
-        path: 'settlement2',
-        name: 'settlement2',
-        component: () => import('@/views/account/settlement'),
-        meta: {
-          title: '结算列表',
-        }
       }
     ]
   },
@@ -182,14 +174,7 @@ export const constantRoutes = [{
           title: '通道列表',
         }
       },
-      {
-        path: 'gatewayList2',
-        name: 'gatewayList2',
-        component: () => import('@/views/gatewayManage/gatewayList'),
-        meta: {
-          title: '通道列表',
-        }
-      }
+      
     ]
 
   },
