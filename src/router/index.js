@@ -119,14 +119,6 @@ export const constantRoutes = [{
           title: '商家列表',
         }
       },
-      {
-        path: 'list2',
-        name: 'list2',
-        component: () => import('@/views/mcaManage/list'),
-        meta: {
-          title: '商家列表',
-        }
-      }
     ]
   },
   // 订单管理

@@ -73,7 +73,7 @@
     </el-row>
     <!-- 按钮区 -->
     <el-row class='operate-btns mt20'>
-      <el-button size="small" type="success"  icon="el-icon-plus">新增</el-button>
+      <!-- <el-button size="small" type="success"  icon="el-icon-plus">新增</el-button> -->
     </el-row>
     <!-- 表格 -->
     <el-row class="mt20">
@@ -98,7 +98,7 @@
             <el-table-column prop="remarks"  label="备注" show-overflow-tooltip header-align="center" align="center"/>
             <el-table-column prop=""  label="操作" show-overflow-tooltip header-align="center" align="center">
              <template slot-scope="scope">
-                 <el-button type="text" size="mini" @click="goRemark(scope.row)">下发备注</el-button>
+                 <el-button type="text" size="mini" @click="OpengoRemark(scope.row)">下发备注</el-button>
             </template>
             </el-table-column>
         </el-table>
@@ -114,8 +114,15 @@
             :total="total">
           </el-pagination>
         </el-col>
-
     </el-row>
+    <el-dialog title="下发备注" :visible.sync="dialogremark">
+        <el-input v-model="remarksObj.remarks" type="textarea"></el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogremark = false">取 消</el-button>
+        <el-button type="primary" @click="goRemark">确 定</el-button>
+      </span>
+        
+    </el-dialog>
 </div>
 </template>
 
@@ -123,6 +130,8 @@
 export default {
   data() {
     return {
+      remarksObj:{},
+      dialogremark:false,
       SeachForm:{//表单
           shopName:"",
           status:"",
@@ -174,16 +183,21 @@ export default {
         }
         return ss.slice(0,ss.length-1)
     },
+    OpengoRemark(row){
+      this.remarksObj = Object.assign({},row) 
+      this.dialogremark = true
+    },
     // 下发备注
     goRemark(row){
       var that = this
       that.Httpclient({
           url:'/api/capital/remarks',
-          data:{id:row.id,remarks:row.remarks},
+          data:{id:that.remarksObj.id,remarks:that.remarksObj.remarks},
           method: "POST"
       }).then(res => {
           if(res.code==0){
               this.$message({ message: '操作成功',type: 'success'})
+              this.dialogremark = false
               this.search()
           }
       })

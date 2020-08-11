@@ -121,7 +121,6 @@ export default {
         data: {},
         method: "POST"
       }).then(res => {
-        console.log(res)
           localStorage.setItem("hasLogin", true);
           localStorage.setItem("token", res.data.userToken);
           localStorage.setItem("userInfo", JSON.stringify(res.data));
