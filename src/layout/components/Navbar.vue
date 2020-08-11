@@ -6,19 +6,21 @@
     <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img  src="../../assets/Coins-2.png" class="user-avatar">
+          <span>用户，你好</span>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
-         <el-dropdown-item divided @click.native="logout">
+         <el-dropdown-item divided @click.native="showUserinfo">
             <span @click="showUserinfo" style="display:block;">查看用户信息</span>
           </el-dropdown-item>
           <el-dropdown-item divided @click.native="logout">
             <span @click="logout" style="display:block;">退出登录</span>
           </el-dropdown-item>
         </el-dropdown-menu>
-      </el-dropdown>
+    </el-dropdown>
     
   </div>
+  
 </template>
 
 <script>
@@ -44,6 +46,10 @@ export default {
     async logout() {
       localStorage.removeItem('hasLogin')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+   async showUserinfo(){
+      
+      this.$emit('showUserinfo', "info")
     }
   }
 }
@@ -76,9 +82,12 @@ export default {
   }
   /deep/ .el-dropdown{
     float: right;
+    margin-right: 20px;
+    line-height: 50px;
     .user-avatar{
-      width: 40px;
-      height: 40px;
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
     }
   }
   .right-menu {

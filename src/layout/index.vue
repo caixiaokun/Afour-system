@@ -4,10 +4,25 @@
     <sidebar class="sidebar-container" />
     <div class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
-        <navbar></navbar>
+        <navbar @showUserinfo="showUserinfo"></navbar>
       </div>
       <app-main></app-main>
     </div>
+    <el-dialog title="用户基本信息" :visible.sync="userInfodetail"
+        width="50%">
+        <p> <span> 用户名: {{userInfoobj.username}}</span></p>
+        <p> <span> 创建时间: {{userInfoobj.createdate}}</span></p>
+        <p> <span> 邮箱: {{userInfoobj.email}}</span></p>
+        <p> <span> 身份: {{userInfoobj.identity}}</span></p>
+        <p> <span> 部门: {{userInfoobj.organid}}</span></p>
+        <p> <span> 电话: {{userInfoobj.phone}}</span></p>
+        <p> <span> 性别: {{userInfoobj.sex=="1"?"男":"女"}}</span></p>
+        <p> <span> 状态: {{userInfoobj.status=="1"?"正常":"失效"}}</span></p>
+         
+        <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="userInfodetail = false">确 定</el-button>
+        </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -21,6 +36,12 @@ export default {
     Navbar,
     Sidebar,
     AppMain
+  },
+  data(){
+    return {
+      userInfodetail:false,
+      userInfoobj:{}
+    }
   },
   mixins: [ResizeMixin],
   computed: {
@@ -45,7 +66,22 @@ export default {
   methods: {
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+    },
+    showUserinfo(){
+      let userInfo = JSON.parse(localStorage.getItem('userInfo'))
+      var that = this
+      that.Httpclient({
+          url:'/api/user/findOne?id='+userInfo.id,
+          data:{},
+          method: "get"
+      }).then(res => {
+          that.userInfodetail =true
+          if(res.code==0){  
+            that.userInfoobj =  res.data
+          }
+      })      
     }
+
   }
 }
 </script>
